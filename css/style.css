@@ -215,9 +215,9 @@ p {
 /* About Section */
 .about-content {
     display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-top: 2rem;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
 }
 
 .about-text {
@@ -225,9 +225,14 @@ p {
     line-height: 1.6;
 }
 
+.about-text.full-width {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
 .about-text p {
-    margin-bottom: 1.5rem;
-    text-align: left;
+    margin-bottom: 1rem;
 }
 
 .skills-container {
