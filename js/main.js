@@ -1,100 +1,116 @@
+// Wait for the DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize smooth scrolling for navigation links
+    initSmoothScrolling();
+    
+    // Initialize navbar scroll effect
+    initNavbarScroll();
+    
+    // Initialize section animations
+    initSectionAnimations();
+    
+    // Initialize experience tiles
+    // initExperienceTiles();
+    
+    // Initialize contact form
+    initContactForm();
+});
+
 // Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
+function initSmoothScrolling() {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const targetId = link.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Update active link
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            }
         });
-    });
-});
-
-// Navbar scroll effect
-const navbar = document.querySelector('.navbar');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll <= 0) {
-        navbar.classList.remove('scroll-up');
-        return;
-    }
-    
-    if (currentScroll > lastScroll && !navbar.classList.contains('scroll-down')) {
-        // Scroll Down
-        navbar.classList.remove('scroll-up');
-        navbar.classList.add('scroll-down');
-    } else if (currentScroll < lastScroll && navbar.classList.contains('scroll-down')) {
-        // Scroll Up
-        navbar.classList.remove('scroll-down');
-        navbar.classList.add('scroll-up');
-    }
-    lastScroll = currentScroll;
-});
-
-// Form submission handling
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        
-        // Here you would typically send the data to a server
-        console.log('Form submitted:', data);
-        
-        // Show success message
-        alert('Thank you for your message! I will get back to you soon.');
-        this.reset();
     });
 }
 
-// Portfolio item hover effect
-document.querySelectorAll('.portfolio-item').forEach(item => {
-    item.addEventListener('mouseenter', function() {
-        this.querySelector('.portfolio-overlay').style.opacity = '1';
+// Navbar scroll effect
+function initNavbarScroll() {
+    const navbar = document.querySelector('.navbar');
+    let lastScrollTop = 0;
+    
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Add/remove scrolled class based on scroll position
+        if (scrollTop > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        
+        lastScrollTop = scrollTop;
+    });
+}
+
+// Section animations
+function initSectionAnimations() {
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    // Create intersection observer for sections
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add animation class to section
+                entry.target.classList.add('animate');
+                
+                // Update active navigation link
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+        });
+    }, {
+        threshold: 0.3
     });
     
-    item.addEventListener('mouseleave', function() {
-        this.querySelector('.portfolio-overlay').style.opacity = '0';
+    // Observe all sections
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+}
+
+// Portfolio item animations
+document.querySelectorAll('.portfolio-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+        item.style.transform = 'translateY(-5px)';
+    });
+    
+    item.addEventListener('mouseleave', () => {
+        item.style.transform = 'translateY(0)';
     });
 });
 
-// Add animation on scroll
-const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.animate-on-scroll');
-    
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementBottom = element.getBoundingClientRect().bottom;
-        
-        if (elementTop < window.innerHeight && elementBottom > 0) {
-            element.classList.add('visible');
-        }
-    });
-};
-
-window.addEventListener('scroll', animateOnScroll);
-window.addEventListener('load', animateOnScroll);
-
-// Typing effect for hero section
-const typingEffect = () => {
-    const text = "Product Manager";
-    const heroTitle = document.querySelector('.hero-content h2');
-    let i = 0;
-    
-    const type = () => {
-        if (i < text.length) {
-            heroTitle.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, 100);
-        }
-    };
-    
-    type();
-};
-
-// Initialize typing effect when page loads
-window.addEventListener('load', typingEffect); 
+// Contact form validation
+function initContactForm() {
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(contactForm);
+            console.log('Form submitted:', Object.fromEntries(formData));
+            contactForm.reset();
+            alert('Thank you for your message!');
+        });
+    }
+} 

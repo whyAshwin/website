@@ -1,0 +1,49 @@
+# Portfolio Website Deployment Guide
+
+## Option 1: GitHub Pages (Free & Easy)
+
+1. Create a GitHub repository for your portfolio
+   ```
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/YOUR_USERNAME/portfolio-website.git
+   git push -u origin main
+   ```
+
+2. Go to your repository Settings > Pages
+   - Set source to "main" branch
+   - Save and wait for the website to be deployed
+
+3. Your website will be available at:
+   `https://YOUR_USERNAME.github.io/portfolio-website/`
+
+## Option 2: Netlify/Vercel (Free & Easy)
+
+1. Create an account on Netlify or Vercel
+2. Connect your GitHub repository
+3. Set the build settings (not required for static sites)
+4. Deploy
+
+## Option 3: Custom Domain
+
+If you want to use a custom domain like `ashwinbaranwal.com`:
+
+1. Purchase a domain from a registrar (Namecheap, GoDaddy, etc.)
+2. Configure DNS settings to point to your hosting provider
+   - If using GitHub Pages, add a CNAME file to your repository
+   - If using Netlify/Vercel, you can configure the domain in their dashboard
+
+## Local Development Server
+
+To test your website locally before deploying:
+
+```
+# If you have Python installed
+python -m http.server
+
+# If you have Node.js installed
+npx serve
+```
+
+Then visit `http://localhost:8000` or the port shown in your terminal. 
