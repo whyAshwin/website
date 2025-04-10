@@ -229,10 +229,12 @@ p {
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
+    text-align: center;
 }
 
 .about-text p {
     margin-bottom: 1rem;
+    text-align: center;
 }
 
 .skills-container {
@@ -290,6 +292,7 @@ p {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    margin: 1.5rem auto 0;
 }
 
 .download-resume::before {
