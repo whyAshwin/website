@@ -250,7 +250,7 @@ body {
 .hero-greeting::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -2px;
     left: 5%;
     right: 5%;
     height: 2px;
