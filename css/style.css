@@ -608,7 +608,7 @@ body {
 }
 
 .portfolio-tag {
-    background: var(--gradient-accent);
+    background: var(--gradient-primary);
     color: white;
     padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-full);
@@ -617,14 +617,16 @@ body {
     white-space: nowrap;
 }
 
-.portfolio-tag:contains("Coming Soon") {
-    background: var(--gradient-secondary);
-}
-
 .portfolio-description {
     color: var(--text-secondary);
     margin-bottom: var(--space-lg);
     line-height: 1.7;
+}
+
+.portfolio-links {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
 }
 
 .portfolio-link {
@@ -640,6 +642,15 @@ body {
 .portfolio-link:hover {
     gap: var(--space-sm);
     color: var(--text-primary);
+}
+
+.portfolio-link-secondary {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.portfolio-link-secondary:hover {
+    color: var(--text-accent);
 }
 
 .portfolio-link-disabled {
@@ -898,6 +909,11 @@ body {
     .portfolio-grid,
     .contact-grid {
         grid-template-columns: 1fr;
+    }
+
+    .portfolio-links {
+        flex-direction: column;
+        gap: var(--space-sm);
     }
 }
 
