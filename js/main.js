@@ -1,83 +1,132 @@
-// Modern Portfolio JavaScript
+// Modern Portfolio JavaScript - Sliding Sections
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all functionality
+    initSlidingSections();
     initNavigation();
-    initScrollAnimations();
-    initSmoothScrolling();
     initMobileMenu();
+    initKeyboardNavigation();
 });
+
+// Sliding sections functionality
+function initSlidingSections() {
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sectionDots = document.querySelectorAll('.section-dot');
+    let currentSection = 0;
+    let isAnimating = false;
+
+    // Function to show specific section
+    function showSection(index) {
+        if (isAnimating || index === currentSection) return;
+        
+        isAnimating = true;
+        
+        // Remove active classes
+        sections[currentSection].classList.remove('active');
+        sections[currentSection].classList.add('prev');
+        
+        // Update current section
+        const prevSection = currentSection;
+        currentSection = index;
+        
+        // Add active class to new section
+        sections[currentSection].classList.remove('prev');
+        sections[currentSection].classList.add('active');
+        
+        // Update navigation
+        updateNavigation();
+        
+        // Reset animation flag after transition
+        setTimeout(() => {
+            sections[prevSection].classList.remove('prev');
+            isAnimating = false;
+        }, 800);
+    }
+
+    // Update navigation active states
+    function updateNavigation() {
+        navLinks.forEach((link, index) => {
+            link.classList.toggle('active', index === currentSection);
+        });
+        
+        sectionDots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSection);
+        });
+    }
+
+    // Handle navigation clicks
+    navLinks.forEach((link, index) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(index);
+        });
+    });
+
+    // Handle section dots clicks
+    sectionDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            showSection(index);
+        });
+    });
+
+    // Handle scroll wheel navigation
+    let scrollTimeout;
+    window.addEventListener('wheel', (e) => {
+        if (isAnimating) return;
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            if (e.deltaY > 0 && currentSection < sections.length - 1) {
+                // Scroll down
+                showSection(currentSection + 1);
+            } else if (e.deltaY < 0 && currentSection > 0) {
+                // Scroll up
+                showSection(currentSection - 1);
+            }
+        }, 50);
+    }, { passive: true });
+
+    // Handle touch navigation for mobile
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    document.addEventListener('touchstart', (e) => {
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+        if (isAnimating) return;
+        
+        touchEndY = e.changedTouches[0].screenY;
+        const touchDiff = touchStartY - touchEndY;
+        
+        // Minimum swipe distance
+        if (Math.abs(touchDiff) > 50) {
+            if (touchDiff > 0 && currentSection < sections.length - 1) {
+                // Swipe up - next section
+                showSection(currentSection + 1);
+            } else if (touchDiff < 0 && currentSection > 0) {
+                // Swipe down - previous section
+                showSection(currentSection - 1);
+            }
+        }
+    }, { passive: true });
+
+    // Expose showSection function globally for button clicks
+    window.showSection = showSection;
+}
 
 // Navigation functionality
 function initNavigation() {
     const nav = document.querySelector('.nav');
-    const navLinks = document.querySelectorAll('.nav-link');
     
     // Handle scroll effect on navigation
-    let lastScrollTop = 0;
     window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Add scrolled class for backdrop effect
-        if (scrollTop > 50) {
+        if (window.scrollY > 50) {
             nav.classList.add('scrolled');
         } else {
             nav.classList.remove('scrolled');
         }
-        
-        // Update active navigation link based on scroll position
-        updateActiveNavLink();
-        
-        lastScrollTop = scrollTop;
-    });
-    
-    // Update active navigation link
-    function updateActiveNavLink() {
-        const sections = document.querySelectorAll('section[id]');
-        const scrollPos = window.scrollY + 100;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }
-}
-
-// Smooth scrolling for navigation links
-function initSmoothScrolling() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 70; // Account for fixed nav
-                
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
-                
-                // Close mobile menu if open
-                const navMenu = document.querySelector('.nav-menu');
-                const navToggle = document.querySelector('.nav-toggle');
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-            }
-        });
     });
 }
 
@@ -99,112 +148,92 @@ function initMobileMenu() {
                 navToggle.classList.remove('active');
             }
         });
+        
+        // Close menu when clicking on nav links
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
     }
 }
 
-// Scroll animations using Intersection Observer
-function initScrollAnimations() {
-    // Create intersection observer for fade-in animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-                
-                // Add staggered animation for timeline items
-                if (entry.target.classList.contains('timeline-item')) {
-                    const delay = Array.from(entry.target.parentNode.children).indexOf(entry.target) * 200;
-                    entry.target.style.transitionDelay = `${delay}ms`;
+// Keyboard navigation
+function initKeyboardNavigation() {
+    document.addEventListener('keydown', (e) => {
+        const sections = document.querySelectorAll('.section');
+        const currentIndex = Array.from(sections).findIndex(section => 
+            section.classList.contains('active')
+        );
+        
+        switch(e.key) {
+            case 'ArrowDown':
+            case ' ': // Spacebar
+                e.preventDefault();
+                if (currentIndex < sections.length - 1) {
+                    window.showSection(currentIndex + 1);
                 }
-                
-                // Add staggered animation for cards
-                if (entry.target.classList.contains('education-card') || 
-                    entry.target.classList.contains('portfolio-card') ||
-                    entry.target.classList.contains('contact-item')) {
-                    const cards = Array.from(entry.target.parentNode.children);
-                    const delay = cards.indexOf(entry.target) * 150;
-                    entry.target.style.transitionDelay = `${delay}ms`;
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                if (currentIndex > 0) {
+                    window.showSection(currentIndex - 1);
                 }
-            }
-        });
-    }, observerOptions);
-    
-    // Observe elements for animation
-    const animateElements = document.querySelectorAll(
-        '.timeline-item, .education-card, .portfolio-card, .contact-item'
-    );
-    
-    animateElements.forEach(el => {
-        observer.observe(el);
+                break;
+            case 'Home':
+                e.preventDefault();
+                window.showSection(0);
+                break;
+            case 'End':
+                e.preventDefault();
+                window.showSection(sections.length - 1);
+                break;
+        }
     });
 }
 
-// Utility function to throttle scroll events
-function throttle(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Add smooth hover effects for interactive elements
-document.addEventListener('DOMContentLoaded', function() {
-    // Portfolio cards hover effect
-    const portfolioCards = document.querySelectorAll('.portfolio-card');
-    portfolioCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    });
-    
-    // Timeline content hover effect
-    const timelineContents = document.querySelectorAll('.timeline-content');
-    timelineContents.forEach(content => {
-        content.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-4px)';
-        });
-        
-        content.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    });
-    
-    // Education cards hover effect
-    const educationCards = document.querySelectorAll('.education-card');
-    educationCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    });
+// Handle button clicks that navigate to sections
+document.addEventListener('click', (e) => {
+    if (e.target.hasAttribute('data-section')) {
+        e.preventDefault();
+        const sectionIndex = parseInt(e.target.getAttribute('data-section'));
+        window.showSection(sectionIndex);
+    }
 });
 
 // Performance optimization: Reduce motion for users who prefer it
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    // Disable animations for users who prefer reduced motion
     const style = document.createElement('style');
     style.textContent = `
-        *, *::before, *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
+        .section {
+            transition: transform 0.3s ease !important;
+        }
+        .section-content {
+            transition: all 0.3s ease !important;
         }
     `;
     document.head.appendChild(style);
 }
+
+// Preload next section content for better performance
+function preloadNextSection() {
+    const sections = document.querySelectorAll('.section');
+    const currentIndex = Array.from(sections).findIndex(section => 
+        section.classList.contains('active')
+    );
+    
+    // Preload images in next section if any
+    if (currentIndex < sections.length - 1) {
+        const nextSection = sections[currentIndex + 1];
+        const images = nextSection.querySelectorAll('img[data-src]');
+        images.forEach(img => {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+        });
+    }
+}
+
+// Initialize preloading
+document.addEventListener('DOMContentLoaded', preloadNextSection);
