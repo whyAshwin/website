@@ -1,6 +1,6 @@
 /* Modern Gradient Portfolio - Dark Theme */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
 
 /* CSS Variables - Modern Gradient Theme */
 :root {
@@ -220,13 +220,28 @@ body {
 }
 
 .hero-greeting {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(var(--font-size-4xl), 6vw, 4rem);
+    font-family: 'Kalam', cursive;
+    font-size: clamp(3rem, 8vw, 5rem);
     color: var(--text-accent);
     margin-bottom: var(--space-sm);
-    font-weight: 600;
-    transform: rotate(-2deg);
+    font-weight: 400;
+    transform: rotate(-1deg);
     display: inline-block;
+    position: relative;
+    letter-spacing: 0.05em;
+}
+
+.hero-greeting::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    opacity: 0.6;
+    transform: rotate(1deg);
 }
 
 .hero-name {
