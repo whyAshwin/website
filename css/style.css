@@ -224,7 +224,7 @@ body {
     font-family: 'Great Vibes', 'Dancing Script', cursive;
     font-size: clamp(3.5rem, 10vw, 6rem);
     color: var(--text-accent);
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-xs);
     font-weight: 400;
     transform: rotate(-2deg);
     display: inline-block;
