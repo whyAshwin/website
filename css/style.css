@@ -1,5 +1,6 @@
 /* Modern Gradient Portfolio - Dark Theme */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
 
 /* CSS Variables - Modern Gradient Theme */
 :root {
@@ -219,10 +220,13 @@ body {
 }
 
 .hero-greeting {
-    font-size: var(--font-size-lg);
-    color: var(--text-secondary);
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(var(--font-size-4xl), 6vw, 4rem);
+    color: var(--text-accent);
     margin-bottom: var(--space-sm);
-    font-weight: 400;
+    font-weight: 600;
+    transform: rotate(-2deg);
+    display: inline-block;
 }
 
 .hero-name {
