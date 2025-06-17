@@ -602,6 +602,10 @@ body {
     white-space: nowrap;
 }
 
+.portfolio-tag:contains("Coming Soon") {
+    background: var(--gradient-secondary);
+}
+
 .portfolio-description {
     color: var(--text-secondary);
     margin-bottom: var(--space-lg);
@@ -621,6 +625,16 @@ body {
 .portfolio-link:hover {
     gap: var(--space-sm);
     color: var(--text-primary);
+}
+
+.portfolio-link-disabled {
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+.portfolio-link-disabled:hover {
+    color: var(--text-muted);
+    gap: var(--space-xs);
 }
 
 /* Contact Section */
