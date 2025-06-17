@@ -1,6 +1,5 @@
 /* Modern Gradient Portfolio - Dark Theme */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
 
 /* CSS Variables - Modern Gradient Theme */
 :root {
@@ -58,6 +57,15 @@
     --radius-lg: 1.5rem;
     --radius-xl: 2rem;
     --radius-full: 9999px;
+}
+
+/* Bumbbled Font Face */
+@font-face {
+    font-family: 'Bumbbled';
+    src: url('https://fonts.cdnfonts.com/s/95078/Bumbbled.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 /* Reset and Base Styles */
@@ -220,7 +228,7 @@ body {
 }
 
 .hero-greeting {
-    font-family: 'Kalam', cursive;
+    font-family: 'Bumbbled', cursive, 'Kalam', cursive;
     font-size: clamp(3rem, 8vw, 5rem);
     color: var(--text-accent);
     margin-bottom: var(--space-sm);
