@@ -806,6 +806,7 @@ body {
 .btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: var(--space-xs);
     padding: 14px 28px;
     font-size: var(--font-size-base);
@@ -817,6 +818,8 @@ body {
     border: none;
     position: relative;
     overflow: hidden;
+    min-width: 140px;
+    text-align: center;
 }
 
 .btn::before {
