@@ -1,0 +1,17 @@
+{
+  "name": "ashwin-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve . -p 8000",
+    "start": "npx serve . -p 8000",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "keywords": ["portfolio", "website"],
+  "author": "Ashwin Baranwal",
+  "license": "MIT"
+}
