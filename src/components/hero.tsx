@@ -16,7 +16,6 @@ export function Hero() {
   return (
     <section id="top" className="relative flex min-h-svh items-center overflow-hidden pt-28 pb-16">
       <LaunchSequence />
-      <LaunchSequence />
       <BackgroundBeams />
       <div className="grid-lines pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       <div className="pointer-events-none absolute left-1/2 top-1/3 size-[560px] -translate-x-1/2 rounded-full bg-accent/20 blur-[130px]" />
