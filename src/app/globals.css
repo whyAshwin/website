@@ -34,6 +34,19 @@
   /* Motion tokens — every animation uses these */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  /* Music-player progress fill */
+  --animate-shimmer: shimmer 2.4s linear infinite;
+}
+
+/* Drifting sheen across the music player's progress fill */
+@keyframes shimmer {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -137,7 +150,7 @@
   }
 }
 
-/* Roadmap triage: staggered verdict cards + results panel */
+/* Playground: staggered reveals for decision cards + results panel */
 .verdict-in {
   animation: verdict-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
