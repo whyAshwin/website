@@ -1,43 +1,45 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useSpring, useMotionValue } from "motion/react";
-import { Check } from "lucide-react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Confetti } from "./confetti";
 
 type DodgingButtonProps = {
   children: React.ReactNode;
   onClick?: () => void;
+  /** How close (px) the cursor must get before it runs away. */
   threshold?: number;
+  /** Clicks needed while it dodges before it gives up. */
   dodgesToCatch?: number;
   className?: string;
-  caughtLabel?: string;
 };
 
 /**
- * Button that dodges your cursor. Catch it (click N times while it runs)
- * and it surrenders — confetti + your onClick fires.
+ * Button that dodges your cursor. Catch it (click it a few times while it
+ * runs) and it surrenders — confetti fires and your onClick runs.
  */
 export function DodgingButton({
   children,
   onClick,
-  threshold = 150,
-  dodgesToCatch = 5,
+  threshold = 130,
+  dodgesToCatch = 3,
   className,
-  caughtLabel = "Got you!",
 }: DodgingButtonProps) {
   const ref = useRef<HTMLButtonElement>(null);
   const [dodges, setDodges] = useState(0);
   const [caught, setCaught] = useState(false);
+  const caughtRef = useRef(false);
+  const [origin, setOrigin] = useState({ x: 0.5, y: 0.4 });
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 360, damping: 28, mass: 0.4 });
-  const sy = useSpring(y, { stiffness: 360, damping: 28, mass: 0.4 });
+  const sx = useSpring(x, { stiffness: 380, damping: 30, mass: 0.4 });
+  const sy = useSpring(y, { stiffness: 380, damping: 30, mass: 0.4 });
 
   const handleMove = useCallback(
     (event: PointerEvent) => {
-      if (caught) return;
+      if (caughtRef.current) return;
       const el = ref.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
@@ -48,7 +50,7 @@ export function DodgingButton({
       const dist = Math.hypot(dx, dy);
       if (dist < threshold) {
         const angle = Math.atan2(dy, dx) || Math.random() * Math.PI * 2;
-        const push = (threshold - dist) * 0.8 + Math.random() * 40;
+        const push = (threshold - dist) * 0.9 + 40;
         x.set(Math.cos(angle) * push);
         y.set(Math.sin(angle) * push);
       } else {
@@ -56,69 +58,61 @@ export function DodgingButton({
         y.set(0);
       }
     },
-    [caught, threshold, x, y],
+    [threshold, x, y],
   );
-
-  const handleClick = (event: React.MouseEvent) => {
-    if (caught) {
-      onClick?.();
-      return;
-    }
-    event.preventDefault();
-    const next = dodges + 1;
-    setDodges(next);
-    const el = ref.current;
-    if (el) {
-      x.set((Math.random() - 0.5) * 70);
-      y.set((Math.random() - 0.5) * 70);
-    }
-    if (next >= dodgesToCatch) {
-      setCaught(true);
-      setTimeout(() => {
-        onClick?.();
-      }, 500);
-    }
-  };
 
   useEffect(() => {
     document.addEventListener("pointermove", handleMove, { passive: true });
     return () => document.removeEventListener("pointermove", handleMove);
   }, [handleMove]);
 
+  const handleClick = () => {
+    if (caughtRef.current) {
+      onClick?.();
+      return;
+    }
+
+    const next = dodges + 1;
+    setDodges(next);
+
+    // Give it a playful little jump on every attempt.
+    x.set((Math.random() - 0.5) * 90);
+    y.set((Math.random() - 0.5) * 90);
+
+    if (next >= dodgesToCatch) {
+      const el = ref.current;
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        setOrigin({
+          x: (rect.left + rect.width / 2) / window.innerWidth,
+          y: (rect.top + rect.height / 2) / window.innerHeight,
+        });
+      }
+      caughtRef.current = true;
+      setCaught(true);
+      x.set(0);
+      y.set(0);
+      setTimeout(() => onClick?.(), 420);
+    }
+  };
+
   return (
     <>
       <motion.button
         ref={ref}
-        style={{ x: sx, y: sy, display: "inline-block" }}
+        type="button"
+        style={{ x: sx, y: sy }}
         onClick={handleClick}
-        disabled={caught}
         className={cn(
-          "relative flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-fg transition-colors hover:border-accent/50",
-          caught && "bg-accent text-bg border-accent shadow-lg shadow-accent/25",
+          "relative inline-flex h-12 items-center gap-2 rounded-full border border-line bg-surface px-5 text-sm font-semibold text-fg transition-colors hover:border-accent/50",
+          caught && "border-accent bg-accent/15",
           className,
         )}
       >
-        <span className="relative z-10">
-          {caught ? (
-            <>
-              <Check className="size-4" /> {caughtLabel}
-            </>
-          ) : (
-            children
-          )}
-        </span>
-        {!caught && (
-          <span className="absolute -inset-px rounded-full border border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        )}
+        {children}
       </motion.button>
       {caught && (
-        <Confetti
-          active
-          count={100}
-          originX={0.5}
-          originY={0.2}
-          colors={["#7c6cff", "#4cc9f0", "#f472b6", "#a3e635", "#fff"]}
-        />
+        <Confetti active count={110} originX={origin.x} originY={origin.y} />
       )}
     </>
   );

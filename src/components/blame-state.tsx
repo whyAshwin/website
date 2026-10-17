@@ -1,18 +1,30 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
+const TRIPLE_MS = 450;
+
 /**
- * Triple-click any heading to trigger a harsh design review:
- * red squiggly underline, shake, and a REJECTED stamp.
- * Click the heading again (or Esc) to restore.
+ * Triple-click any heading to trigger a harsh design review: squiggly red
+ * underline, a shake, and a REJECTED stamp. Click the heading again, click the
+ * stamp, or press Esc to restore.
  */
 export function BlameState() {
   const [reviewed, setReviewed] = useState<HTMLElement | null>(null);
+  const reviewedRef = useRef<HTMLElement | null>(null);
+  const tracker = useRef<{ el: HTMLElement | null; count: number; at: number }>({
+    el: null,
+    count: 0,
+    at: 0,
+  });
 
-  const clear = useCallback(() => setReviewed(null), []);
+  const clear = useCallback(() => {
+    reviewedRef.current = null;
+    setReviewed(null);
+  }, []);
 
+  // Esc restores.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") clear();
@@ -21,54 +33,54 @@ export function BlameState() {
     return () => window.removeEventListener("keydown", onKey);
   }, [clear]);
 
-  const handleClick = useCallback(
-    (e: MouseEvent) => {
-      const target = e.target as HTMLElement | null;
-      const heading = target?.closest<HTMLHeadingElement>("h1,h2,h3");
+  // Triple-click a heading to reject it; click it again to restore.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const heading = (e.target as HTMLElement | null)?.closest<HTMLElement>(
+        "h1,h2,h3"
+      );
       if (!heading) return;
 
-      if (reviewed === heading) {
-        setReviewed(null);
+      if (reviewedRef.current === heading) {
+        clear();
         return;
       }
 
-      let count = 0;
-      let timer: ReturnType<typeof setTimeout>;
-      const onTriple = (ev: MouseEvent) => {
-        const t = ev.target as HTMLElement | null;
-        const h = t?.closest<HTMLHeadingElement>("h1,h2,h3");
-        if (!h || h !== heading) return;
-        count++;
-        if (count === 1) timer = setTimeout(() => (count = 0), 400);
-        if (count === 3) {
-          clearTimeout(timer);
-          count = 0;
-          setReviewed(heading);
-        }
-      };
-      heading.addEventListener("click", onTriple, { once: true });
-      const rearm = () => {
-        heading.addEventListener("click", onTriple, { once: true });
-      };
-      const t = setTimeout(rearm, 100);
-      return () => clearTimeout(t);
-    },
-    [reviewed],
-  );
+      const now = Date.now();
+      const t = tracker.current;
+      t.count = t.el === heading && now - t.at < TRIPLE_MS ? t.count + 1 : 1;
+      t.el = heading;
+      t.at = now;
 
+      if (t.count >= 3) {
+        t.count = 0;
+        reviewedRef.current = heading;
+        setReviewed(heading);
+      }
+    };
+
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [clear]);
+
+  // Paint the squiggle + shake onto the reviewed heading.
   useEffect(() => {
-    document.addEventListener("mousedown", handleClick, true);
-    return () => document.removeEventListener("mousedown", handleClick, true);
-  }, [handleClick]);
+    if (!reviewed) return;
+    reviewed.classList.add("blame-reviewed");
+    return () => reviewed.classList.remove("blame-reviewed");
+  }, [reviewed]);
 
   if (!reviewed) return null;
 
-  return <BlameBadge target={reviewed} />;
+  return <BlameBadge target={reviewed} onDismiss={clear} />;
 }
 
-type BlameBadgeProps = { target: HTMLElement };
+type BlameBadgeProps = {
+  target: HTMLElement;
+  onDismiss: () => void;
+};
 
-function BlameBadge({ target }: BlameBadgeProps) {
+function BlameBadge({ target, onDismiss }: BlameBadgeProps) {
   const [rect, setRect] = useState<DOMRect | null>(null);
 
   useEffect(() => {
@@ -76,20 +88,25 @@ function BlameBadge({ target }: BlameBadgeProps) {
     update();
     const ro = new ResizeObserver(update);
     ro.observe(target);
-    return () => ro.disconnect();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, [target]);
 
   if (!rect) return null;
 
   return (
-    <span
-      className="absolute z-[60] flex items-center gap-2 rounded-full bg-[#ef4444] px-2.5 py-1 text-[10px] font-bold text-white uppercase tracking-wider shadow-lg"
-      style={{
-        top: rect.top - 26,
-        left: rect.left,
-      }}
+    <button
+      type="button"
+      onClick={onDismiss}
+      style={{ top: Math.max(8, rect.top - 30), left: rect.left }}
+      className="fixed z-[90] flex items-center gap-1.5 rounded-full bg-[#ef4444] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg transition-transform hover:scale-105"
     >
-      <X className="size-3.5" /> REJECTED
-    </span>
+      <X className="size-3.5" /> Rejected
+    </button>
   );
 }

@@ -6,7 +6,6 @@ import { DodgingButton } from "@/components/dodging-button";
 import { profile, socials } from "@/lib/content";
 import { useCurrentYear } from "@/lib/use-current-year";
 import { Reveal } from "./reveal";
-import { Magnetic } from "./magnetic";
 import { SocialIcon } from "./social-icon";
 
 export function Contact() {
@@ -40,12 +39,14 @@ export function Contact() {
           </p>
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <Magnetic strength={0.2}>
-              <DodgingButton onClick={copyEmail}>
-              {copied ? <Check className="size-4 text-accent" /> : <Copy className="size-4 text-accent" />}
+            <DodgingButton onClick={copyEmail}>
+              {copied ? (
+                <Check className="size-4 text-accent" />
+              ) : (
+                <Copy className="size-4 text-accent" />
+              )}
               {copied ? "Copied!" : profile.email}
             </DodgingButton>
-            </Magnetic>
 
             <a
               href={profile.resume}
@@ -55,6 +56,10 @@ export function Contact() {
               View résumé
             </a>
           </div>
+
+          <p className="mt-3 font-mono text-[11px] text-faint">
+            psst — the email button likes to run. catch it.
+          </p>
 
           <div className="mt-10 flex items-center justify-center gap-3">
             {socials.map((social) => (

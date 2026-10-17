@@ -171,6 +171,41 @@
   box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-accent) 28%, transparent);
 }
 
+/* Design-review gag: squiggly underline + shake on a "rejected" heading */
+.blame-reviewed {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: #ef4444;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
+  animation: blame-shake 0.4s ease;
+}
+
+@keyframes blame-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blame-reviewed {
+    animation: none;
+  }
+}
+
 /* Faint blueprint grid */
 .grid-lines {
   background-image:
