@@ -22,12 +22,7 @@ export function SectionHeading({
         className,
       )}
     >
-      <p
-        className={cn(
-          "font-mono text-xs uppercase tracking-[0.3em] text-accent",
-          align === "center" && "justify-center",
-        )}
-      >
+      <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
         {kicker}
       </p>
       <h2 className="mt-3 text-[clamp(1.9rem,5vw,3rem)] font-semibold tracking-tight">

@@ -15,7 +15,9 @@ function Counter({
   suffix?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-15%" });
+  // Bottom-only margin: a single "-15%" shrinks the root on every side, which
+  // silently excluded the narrow first-column numbers from ever triggering.
+  const inView = useInView(ref, { once: true, margin: "0px 0px -15% 0px" });
   const reduce = useReducedMotion();
   const [display, setDisplay] = useState(0);
 
@@ -26,7 +28,12 @@ function Counter({
       ease: [0.16, 1, 0.3, 1],
       onUpdate: (v) => setDisplay(v),
     });
-    return () => controls.stop();
+    // Backstop: guarantee the final number even if frames are throttled.
+    const settle = setTimeout(() => setDisplay(value), 1900);
+    return () => {
+      controls.stop();
+      clearTimeout(settle);
+    };
   }, [inView, value, reduce]);
 
   return (

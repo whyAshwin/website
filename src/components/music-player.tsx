@@ -78,6 +78,7 @@ export function MusicPlayer() {
         oscillators.forEach((o) => o.stop());
         lfo.stop();
         filter.disconnect();
+        master.disconnect();
       },
     };
   }, []);

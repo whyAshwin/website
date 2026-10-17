@@ -12,6 +12,14 @@ export function Hero() {
   const reduce = useReducedMotion();
   const show = ready || Boolean(reduce);
 
+  // Compose the hero subtitle without splicing a lowercase fragment into a
+  // finished sentence ("...by product. listening closely...").
+  const blurbParts = profile.blurb.split(" — ");
+  const blurbTail = blurbParts.length > 1 ? blurbParts.slice(1).join(" — ") : null;
+  const heroTail = blurbTail
+    ? blurbTail.charAt(0).toUpperCase() + blurbTail.slice(1)
+    : profile.blurb;
+
   return (
     <section id="top" className="relative flex min-h-svh items-center overflow-hidden pt-28 pb-16">
       <BackgroundBeams />
@@ -49,7 +57,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
             className="mx-auto mt-6 max-w-xl text-balance text-lg leading-relaxed text-muted lg:mx-0"
           >
-            {profile.tagline} <span className="text-fg">{profile.blurb.split(" — ")[1]}</span>
+            {profile.tagline} <span className="text-fg">{heroTail}</span>
           </motion.p>
 
           <motion.div
