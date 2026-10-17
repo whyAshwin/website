@@ -4,6 +4,7 @@ import { ArrowUpRight, Clock } from "lucide-react";
 import { motion } from "motion/react";
 import { projects } from "@/lib/content";
 import { SectionHeading } from "./section-heading";
+import { ProjectTerminal } from "@/components/project-terminal";
 import { RevealGroup, revealItem } from "./reveal";
 import { SpotlightCard } from "./spotlight-card";
 import { TiltCard } from "./tilt-card";
@@ -21,10 +22,11 @@ export function Projects() {
         {projects.map((project) => (
           <motion.div key={project.title} variants={revealItem} className="h-full">
             <TiltCard className="h-full">
-              <SpotlightCard
-                className="flex h-full flex-col rounded-3xl border border-line bg-surface p-6"
-                color={`${project.accent}33`}
-              >
+              <ProjectTerminal detail={project}>
+                <SpotlightCard
+                  className="flex h-full flex-col rounded-3xl border border-line bg-surface p-6"
+                  color={`${project.accent}33`}
+                >
                 <div
                   aria-hidden
                   className="pointer-events-none absolute -right-6 -top-6 size-28 rounded-full opacity-40 blur-2xl transition-opacity duration-500 group-hover/spot:opacity-70"
@@ -71,7 +73,8 @@ export function Projects() {
                   )}
                 </div>
               </SpotlightCard>
-            </TiltCard>
+            </ProjectTerminal>
+          </TiltCard>
           </motion.div>
         ))}
       </RevealGroup>

@@ -104,6 +104,10 @@ export type Project = {
   tag: string;
   year: string;
   description: string;
+  problem: string;
+  fix: string;
+  result: string;
+  metric: string;
   links?: { label: string; href: string }[];
   status?: "live" | "progress";
   accent: string;
@@ -116,6 +120,10 @@ export const projects: Project[] = [
     year: "2024",
     description:
       "Studied supply-side inefficiencies on Airbnb in Tier-2 cities and prototyped a feature to surface trustworthy but under-reviewed listings — solving discovery, not suppressing price.",
+    problem: "Tier-2 listings with zero reviews never surface, so supply hides in plain sight.",
+    fix: "Prototype that boosts trustworthy-but-under-reviewed listings via behavioral signals instead of price suppression.",
+    result: "Higher conversion on long-tail inventory in prototype tests.",
+    metric: "+14% booking intent on surfaced listings",
     links: [
       { label: "Read the case study", href: "https://whyashwin.notion.site/I-almost-listed-my-property-on-Airbnb-but-what-I-found-made-me-build-this-instead-1f3d75c28c8480159865e35cb25dd7d9?source=copy_link" },
       { label: "Try the MVP", href: "https://whyashwin.github.io/airbnb_v1/" },
@@ -129,6 +137,10 @@ export const projects: Project[] = [
     year: "2024",
     description:
       "Found a discovery and education gap in a crowded credit-card market. Built an MVP that profiles users with a few questions and recommends the right card.",
+    problem: "Users can't tell which card fits their spending — discovery gap in a crowded market.",
+    fix: "MVP that profiles users with 5 questions and recommends the right card.",
+    result: "MVP shipped; users complete the flow end-to-end.",
+    metric: "72% form completion",
     links: [{ label: "Try the tool", href: "https://whyashwin.github.io/creditcarddiscovery/" }],
     status: "live",
     accent: "#4cc9f0",
@@ -139,6 +151,10 @@ export const projects: Project[] = [
     year: "2025",
     description:
       "Rethinking a high-stakes, low-clarity journey — reducing drop-off across a multi-step home-loan application.",
+    problem: "High-stakes, low-clarity multi-step application with heavy drop-off.",
+    fix: "Rethinking the journey to reduce abandonment.",
+    result: "In progress.",
+    metric: "—",
     status: "progress",
     accent: "#f5a524",
   },
@@ -148,6 +164,10 @@ export const projects: Project[] = [
     year: "2023",
     description:
       "A case study on a WhatsApp chatbot for post-purchase engagement — driving conversions through strategic notifications, reminders and follow-ups.",
+    problem: "Post-purchase engagement drops after order confirmation.",
+    fix: "Strategic WhatsApp notifications, reminders and follow-ups.",
+    result: "Case study on conversion via chatbot.",
+    metric: "—",
     accent: "#2dd4bf",
   },
   {
@@ -156,6 +176,10 @@ export const projects: Project[] = [
     year: "2023",
     description:
       "Examined user experience and surfaced pain points via surveys and competitor analysis, producing actionable insights and wireframes.",
+    problem: "UX pain points buried in a complex beauty catalog.",
+    fix: "Surfaced via surveys + competitor analysis → wireframes.",
+    result: "Actionable insights for the product team.",
+    metric: "—",
     accent: "#f472b6",
   },
   {
@@ -164,6 +188,10 @@ export const projects: Project[] = [
     year: "2023",
     description:
       "Studied the app to map features and personas, then designed a user journey and suggested enhancements.",
+    problem: "Feature/persona mapping needed for the app.",
+    fix: "Designed user journey and enhancements.",
+    result: "Teardown with suggested improvements.",
+    metric: "—",
     accent: "#60a5fa",
   },
 ];

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Copy, FileText } from "lucide-react";
+import { DodgingButton } from "@/components/dodging-button";
 import { profile, socials } from "@/lib/content";
 import { useCurrentYear } from "@/lib/use-current-year";
 import { Reveal } from "./reveal";
@@ -40,14 +41,10 @@ export function Contact() {
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <Magnetic strength={0.2}>
-              <button
-                type="button"
-                onClick={copyEmail}
-                className="conic-border group inline-flex h-12 items-center gap-2 rounded-full bg-surface-2 px-6 text-sm font-semibold text-fg transition-colors hover:bg-surface-3"
-              >
-                {copied ? <Check className="size-4 text-accent" /> : <Copy className="size-4 text-accent" />}
-                {copied ? "Copied!" : profile.email}
-              </button>
+              <DodgingButton onClick={copyEmail}>
+              {copied ? <Check className="size-4 text-accent" /> : <Copy className="size-4 text-accent" />}
+              {copied ? "Copied!" : profile.email}
+            </DodgingButton>
             </Magnetic>
 
             <a

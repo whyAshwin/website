@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { IntroProvider, Preloader } from "@/components/intro";
 import SmoothScroll from "@/components/smooth-scroll";
+import { KonamiDebug } from "@/components/konami-debug";
+import { BlameState } from "@/components/blame-state";
+import { LaunchSequence } from "@/components/launch-sequence";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -66,7 +69,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="grain relative min-h-svh">
         <IntroProvider>
+          <LaunchSequence />
           <Preloader />
+          <BlameState />
+          <KonamiDebug />
           <SmoothScroll />
           {children}
         </IntroProvider>
