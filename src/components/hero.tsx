@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { profile, socials } from "@/lib/content";
 import { useIntro } from "./intro";
-import { LaunchSequence } from "@/components/launch-sequence";
 import { BackgroundBeams } from "./background-beams";
 
 export function Hero() {
@@ -15,7 +14,6 @@ export function Hero() {
 
   return (
     <section id="top" className="relative flex min-h-svh items-center overflow-hidden pt-28 pb-16">
-      <LaunchSequence />
       <BackgroundBeams />
       <div className="grid-lines pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       <div className="pointer-events-none absolute left-1/2 top-1/3 size-[560px] -translate-x-1/2 rounded-full bg-accent/20 blur-[130px]" />
@@ -150,7 +148,7 @@ export function Hero() {
                 initial={{ filter: "blur(24px)", scale: 1.12 }}
                 animate={show ? { filter: "blur(0px)", scale: 1 } : undefined}
                 transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="size-full"
+                className="relative size-full"
               >
                 <Image
                   src="/profile.jpg"
