@@ -108,23 +108,7 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="order-1 flex justify-center lg:order-2"
         >
-          {/* HeroPortrait sizes its own box; this wrapper only anchors the chip. */}
-          <div className="relative">
-            <HeroPortrait show={show} />
-
-            {/* Status chip */}
-            <motion.div
-              animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-              transition={{ duration: 0.7, delay: 0.8 }}
-              className="glass absolute -bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full px-3.5 py-2 text-xs font-medium"
-            >
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
-              </span>
-              Open to product roles
-            </motion.div>
-          </div>
+          <HeroPortrait show={show} />
         </motion.div>
       </div>
 
