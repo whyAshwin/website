@@ -104,10 +104,12 @@ export type Project = {
   tag: string;
   year: string;
   description: string;
-  problem: string;
-  fix: string;
-  result: string;
-  metric: string;
+  /**
+   * What the case terminal types out on hover. Labels are per project so work
+   * in progress can say what it's betting on and measuring, rather than
+   * printing an empty result. Every line has to say something.
+   */
+  readout: { label: string; value: string }[];
   links?: { label: string; href: string }[];
   status?: "live" | "progress";
   accent: string;
@@ -120,10 +122,21 @@ export const projects: Project[] = [
     year: "2024",
     description:
       "Studied supply-side inefficiencies on Airbnb in Tier-2 cities and prototyped a feature to surface trustworthy but under-reviewed listings — solving discovery, not suppressing price.",
-    problem: "Tier-2 listings with zero reviews never surface, so supply hides in plain sight.",
-    fix: "Prototype that boosts trustworthy-but-under-reviewed listings via behavioral signals instead of price suppression.",
-    result: "Higher conversion on long-tail inventory in prototype tests.",
-    metric: "+14% booking intent on surfaced listings",
+    readout: [
+      {
+        label: "problem",
+        value: "Zero-review listings in Tier-2 cities never surface. Good supply, invisible.",
+      },
+      {
+        label: "fix",
+        value: "Rank on trust signals — response time, photo quality, verified ID — not review count.",
+      },
+      {
+        label: "result",
+        value: "Under-reviewed listings convert, and price never gets touched.",
+      },
+      { label: "metric", value: "+14% booking intent on surfaced listings" },
+    ],
     links: [
       { label: "Read the case study", href: "https://whyashwin.notion.site/I-almost-listed-my-property-on-Airbnb-but-what-I-found-made-me-build-this-instead-1f3d75c28c8480159865e35cb25dd7d9?source=copy_link" },
       { label: "Try the MVP", href: "https://whyashwin.github.io/airbnb_v1/" },
@@ -137,10 +150,21 @@ export const projects: Project[] = [
     year: "2024",
     description:
       "Found a discovery and education gap in a crowded credit-card market. Built an MVP that profiles users with a few questions and recommends the right card.",
-    problem: "Users can't tell which card fits their spending — discovery gap in a crowded market.",
-    fix: "MVP that profiles users with 5 questions and recommends the right card.",
-    result: "MVP shipped; users complete the flow end-to-end.",
-    metric: "72% form completion",
+    readout: [
+      {
+        label: "problem",
+        value: 'Every card is marketed as "the best card". None answer "best for me".',
+      },
+      {
+        label: "fix",
+        value: "Five questions about real spending, one recommendation — not a comparison table.",
+      },
+      {
+        label: "result",
+        value: "Shipped self-serve. People finish it without being chased.",
+      },
+      { label: "metric", value: "72% form completion" },
+    ],
     links: [{ label: "Try the tool", href: "https://whyashwin.github.io/creditcarddiscovery/" }],
     status: "live",
     accent: "#4cc9f0",
@@ -151,10 +175,21 @@ export const projects: Project[] = [
     year: "2025",
     description:
       "Rethinking a high-stakes, low-clarity journey — reducing drop-off across a multi-step home-loan application.",
-    problem: "High-stakes, low-clarity multi-step application with heavy drop-off.",
-    fix: "Rethinking the journey to reduce abandonment.",
-    result: "In progress.",
-    metric: "—",
+    readout: [
+      {
+        label: "problem",
+        value:
+          "The biggest loan most people ever take, through a form that never says what happens next.",
+      },
+      {
+        label: "bet",
+        value: "The drop-off isn't the length. It's the silence between steps.",
+      },
+      {
+        label: "measuring",
+        value: "Abandonment by step, and time-to-first-document.",
+      },
+    ],
     status: "progress",
     accent: "#f5a524",
   },
@@ -164,10 +199,21 @@ export const projects: Project[] = [
     year: "2023",
     description:
       "A case study on a WhatsApp chatbot for post-purchase engagement — driving conversions through strategic notifications, reminders and follow-ups.",
-    problem: "Post-purchase engagement drops after order confirmation.",
-    fix: "Strategic WhatsApp notifications, reminders and follow-ups.",
-    result: "Case study on conversion via chatbot.",
-    metric: "—",
+    readout: [
+      {
+        label: "problem",
+        value: "The relationship ends at order confirmation. Everything after is silence.",
+      },
+      {
+        label: "fix",
+        value:
+          "Post-purchase on WhatsApp — dispatch, delivery, reorder — not another push notification.",
+      },
+      {
+        label: "finding",
+        value: "Repurchase is a conversation. Campaigns don't have one.",
+      },
+    ],
     accent: "#2dd4bf",
   },
   {
@@ -176,10 +222,20 @@ export const projects: Project[] = [
     year: "2023",
     description:
       "Examined user experience and surfaced pain points via surveys and competitor analysis, producing actionable insights and wireframes.",
-    problem: "UX pain points buried in a complex beauty catalog.",
-    fix: "Surfaced via surveys + competitor analysis → wireframes.",
-    result: "Actionable insights for the product team.",
-    metric: "—",
+    readout: [
+      {
+        label: "problem",
+        value: "Pain points buried under a complex beauty catalogue.",
+      },
+      {
+        label: "fix",
+        value: "Surveys and a competitor teardown, then wireframes for the paths that broke.",
+      },
+      {
+        label: "finding",
+        value: "The catalogue wasn't too big. The filters were too shallow.",
+      },
+    ],
     accent: "#f472b6",
   },
   {
@@ -188,10 +244,20 @@ export const projects: Project[] = [
     year: "2023",
     description:
       "Studied the app to map features and personas, then designed a user journey and suggested enhancements.",
-    problem: "Feature/persona mapping needed for the app.",
-    fix: "Designed user journey and enhancements.",
-    result: "Teardown with suggested improvements.",
-    metric: "—",
+    readout: [
+      {
+        label: "problem",
+        value: "Feature sprawl: the app grew, but nothing mapped which persona needed what.",
+      },
+      {
+        label: "fix",
+        value: "Feature-to-persona map, then a journey rebuilt around the jobs that mattered.",
+      },
+      {
+        label: "finding",
+        value: "Nobody was missing a feature. They were missing the order to use them in.",
+      },
+    ],
     accent: "#60a5fa",
   },
 ];

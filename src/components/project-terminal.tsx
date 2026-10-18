@@ -5,15 +5,10 @@ import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Code2, Terminal } from "lucide-react";
 
-type CaseDetail = {
-  problem: string;
-  fix: string;
-  result: string;
-  metric: string;
-};
+type ReadoutLine = { label: string; value: string };
 
 type ProjectTerminalProps = {
-  detail: CaseDetail;
+  readout: readonly ReadoutLine[];
   children: React.ReactNode;
   className?: string;
 };
@@ -22,27 +17,23 @@ const LINE_PAUSE = 220;
 
 /**
  * Hover (or keyboard-focus) a case-study card and a terminal slides up,
- * typing out Problem / Fix / Result / Metric one line at a time.
+ * typing out the readout one line at a time.
  *
- * The detail is also exposed to assistive tech through a visually hidden
- * block, and the card content always renders — including under reduced motion,
- * where the hover panel is skipped entirely.
+ * Labels are padded to the longest one in the card, so `problem` / `bet` /
+ * `measuring` / `finding` all line up. The readout is also exposed to
+ * assistive tech through a visually hidden block, and the card content always
+ * renders — including under reduced motion, where the hover panel is skipped.
  */
-export function ProjectTerminal({ detail, children, className }: ProjectTerminalProps) {
+export function ProjectTerminal({ readout, children, className }: ProjectTerminalProps) {
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [done, setDone] = useState<string[]>([]);
   const [typing, setTyping] = useState("");
 
-  const lines = useMemo(
-    () => [
-      `> problem   ${detail.problem}`,
-      `> fix       ${detail.fix}`,
-      `> result    ${detail.result}`,
-      `> metric    ${detail.metric}`,
-    ],
-    [detail.problem, detail.fix, detail.result, detail.metric],
-  );
+  const lines = useMemo(() => {
+    const width = Math.max(...readout.map((l) => l.label.length));
+    return readout.map((l) => `> ${l.label.padEnd(width)}  ${l.value}`);
+  }, [readout]);
 
   // Typing engine. Runs only while open, and is fully torn down on leave —
   // both the frame handle and the inter-line timer are cleared, so nothing

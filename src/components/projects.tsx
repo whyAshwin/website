@@ -22,7 +22,7 @@ export function Projects() {
         {projects.map((project) => (
           <motion.div key={project.title} variants={revealItem} className="h-full">
             <TiltCard className="h-full">
-              <ProjectTerminal detail={project}>
+              <ProjectTerminal readout={project.readout}>
                 <SpotlightCard
                   className="flex h-full flex-col rounded-3xl border border-line bg-surface p-6"
                   color={`${project.accent}33`}
