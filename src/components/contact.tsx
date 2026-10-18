@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check, Copy, FileText } from "lucide-react";
-import { DodgingButton } from "@/components/dodging-button";
 import { profile, socials } from "@/lib/content";
 import { useCurrentYear } from "@/lib/use-current-year";
 import { Reveal } from "./reveal";
@@ -11,12 +10,21 @@ import { SocialIcon } from "./social-icon";
 export function Contact() {
   const [copied, setCopied] = useState(false);
   const year = useCurrentYear();
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (resetTimer.current) clearTimeout(resetTimer.current);
+    },
+    [],
+  );
 
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(profile.email);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
+      if (resetTimer.current) clearTimeout(resetTimer.current);
+      resetTimer.current = setTimeout(() => setCopied(false), 1800);
     } catch {
       window.location.href = `mailto:${profile.email}`;
     }
@@ -39,14 +47,18 @@ export function Contact() {
           </p>
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <DodgingButton onClick={copyEmail}>
+            <button
+              type="button"
+              onClick={copyEmail}
+              className="inline-flex h-12 items-center gap-2 rounded-full border border-line bg-surface px-5 text-sm font-semibold text-fg transition-colors hover:border-accent/50"
+            >
               {copied ? (
                 <Check className="size-4 text-accent" />
               ) : (
                 <Copy className="size-4 text-accent" />
               )}
               {copied ? "Copied!" : profile.email}
-            </DodgingButton>
+            </button>
 
             <a
               href={profile.resume}
@@ -57,8 +69,8 @@ export function Contact() {
             </a>
           </div>
 
-          <p className="mt-3 font-mono text-[11px] text-faint">
-            psst — the email button likes to run. catch it.
+          <p role="status" aria-live="polite" className="sr-only">
+            {copied ? "Email address copied to clipboard." : ""}
           </p>
 
           <div className="mt-10 flex items-center justify-center gap-3">

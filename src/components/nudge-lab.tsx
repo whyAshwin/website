@@ -160,8 +160,7 @@ export function NudgeLab() {
                   step={1}
                   value={nudges}
                   onChange={(e) => onLever(Number(e.target.value))}
-                  aria-label="Notifications per day"
-                  aria-valuetext={`${nudges} notifications per day`}
+                  aria-valuetext={`${nudges} ${nudges === 1 ? "nudge" : "nudges"} per day`}
                   className="lever absolute inset-0 h-full w-full cursor-grab"
                 />
               </div>

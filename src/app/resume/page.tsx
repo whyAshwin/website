@@ -18,9 +18,9 @@ export default function ResumePage() {
           <ArrowLeft className="size-4" />
           Back
         </Link>
-        <span className="font-mono text-xs uppercase tracking-[0.2em] text-faint">
+        <h1 className="font-mono text-xs uppercase tracking-[0.2em] text-faint">
           Résumé
-        </span>
+        </h1>
         <a
           href="/Ashwin_Baranwal_Product.pdf"
           download

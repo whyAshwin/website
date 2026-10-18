@@ -71,6 +71,14 @@
     overflow-x: hidden;
   }
 
+  /* Tailwind's preflight leaves buttons on the default arrow cursor, so every
+     button on the page read as "not clickable" while the links beside it did
+     not. Anything interactive gets a pointer. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
   ::selection {
     background: color-mix(in oklab, var(--color-accent) 45%, transparent);
     color: #fff;

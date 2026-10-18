@@ -49,29 +49,29 @@ export function Projects() {
                   {project.description}
                 </p>
 
-                <div className="relative mt-6">
-                  {project.status === "progress" ? (
+                {project.status === "progress" ? (
+                  <div className="relative mt-6">
                     <span className="inline-flex items-center gap-2 font-mono text-xs text-faint">
                       <Clock className="size-3.5" />
                       In progress
                     </span>
-                  ) : (
-                    <div className="flex flex-wrap gap-4">
-                      {project.links?.map((link) => (
-                        <a
-                          key={link.href}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group/link inline-flex items-center gap-1.5 text-sm font-medium text-fg transition-colors hover:text-accent"
-                        >
-                          {link.label}
-                          <ArrowUpRight className="size-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                  </div>
+                ) : project.links?.length ? (
+                  <div className="relative mt-6 flex flex-wrap gap-4">
+                    {project.links.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link inline-flex items-center gap-1.5 text-sm font-medium text-fg transition-colors hover:text-accent"
+                      >
+                        {link.label}
+                        <ArrowUpRight className="size-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
               </SpotlightCard>
             </ProjectTerminal>
           </TiltCard>
