@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { profile, socials } from "@/lib/content";
 import { useIntro } from "./intro";
 import { BackgroundBeams } from "./background-beams";
+import { HeroPortrait } from "./hero-portrait";
 
 export function Hero() {
   const { ready } = useIntro();
@@ -108,66 +108,7 @@ export function Hero() {
           className="order-1 flex justify-center lg:order-2"
         >
           <div className="relative size-[280px] sm:size-[360px] lg:size-[420px]">
-            {/* Glow */}
-            <div className="absolute inset-0 rounded-full bg-accent/25 blur-3xl" />
-            {/* Rotating dashed ring */}
-            <motion.svg
-              viewBox="0 0 500 500"
-              className="absolute inset-0 size-full text-accent"
-              animate={reduce ? undefined : { rotate: 360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-              aria-hidden
-            >
-              <circle
-                cx="250"
-                cy="250"
-                r="244"
-                fill="transparent"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeDasharray="26 14 0 0"
-                opacity="0.7"
-              />
-            </motion.svg>
-            {/* Counter-rotating thin ring */}
-            <motion.svg
-              viewBox="0 0 500 500"
-              className="absolute inset-0 size-full text-accent-2"
-              animate={reduce ? undefined : { rotate: -360 }}
-              transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
-              aria-hidden
-            >
-              <circle
-                cx="250"
-                cy="250"
-                r="230"
-                fill="transparent"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeDasharray="2 10"
-                opacity="0.35"
-              />
-            </motion.svg>
-
-            {/* Photo */}
-            <div className="absolute inset-6 overflow-hidden rounded-full border border-line-strong bg-surface-2">
-              <motion.div
-                initial={{ filter: "blur(24px)", scale: 1.12 }}
-                animate={show ? { filter: "blur(0px)", scale: 1 } : undefined}
-                transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="relative size-full"
-              >
-                <Image
-                  src="/profile.jpg"
-                  alt={profile.name}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 360px, 420px"
-                  className="object-cover"
-                />
-              </motion.div>
-            </div>
+            <HeroPortrait show={show} />
 
             {/* Status chip */}
             <motion.div
