@@ -29,7 +29,7 @@ export function Projects() {
                 >
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute -right-6 -top-6 size-28 rounded-full opacity-40 blur-2xl transition-opacity duration-500 group-hover/spot:opacity-70"
+                  className="pointer-events-none absolute -bottom-6 -right-6 size-28 rounded-full opacity-40 blur-2xl transition-opacity duration-500 group-hover/spot:opacity-70"
                   style={{ background: project.accent }}
                 />
                 <div className="relative flex items-center justify-between">
