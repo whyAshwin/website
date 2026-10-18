@@ -268,6 +268,19 @@ export type Education = {
   detail: string;
   year: string;
   score?: string;
+  /** Campus photo, used as the card background. */
+  image: string;
+  /**
+   * Both the object-position and the zoom origin, so the crop and the zoom
+   * agree on which part of the photo matters.
+   */
+  focus?: string;
+  /** Zoom factor, for photos whose subject sits small in the frame. */
+  zoom?: number;
+  /** CSS filter, for flat or hazy photos that vanish under the scrim. */
+  filter?: string;
+  /** Photo opacity. Falls back to the `opacity-60` class. */
+  opacity?: number;
 };
 
 export const education: Education[] = [
@@ -276,6 +289,13 @@ export const education: Education[] = [
     school: "Indian Institute of Management, Sirmaur",
     detail: "Sirmaur, India",
     year: "Class of 2025",
+    image: "/gallery/iim-sirmaur.jpg",
+    // A hazy morning shot: the blue-roof block sits small, low and right, so
+    // zoom onto it and lift the contrast, or it disappears under the scrim.
+    focus: "85% 78%",
+    zoom: 2,
+    filter: "brightness(1.45) contrast(1.2) saturate(1.1)",
+    opacity: 0.72,
   },
   {
     degree: "Bachelor of Commerce — Finance",
@@ -283,6 +303,9 @@ export const education: Education[] = [
     detail: "Varanasi, India · AIR 382 of 4L applicants",
     year: "Class of 2023",
     score: "8.10 / 10.00",
+    // Sunlit stone and dark trees: plenty of contrast already, so this one
+    // needs nothing but the centred crop.
+    image: "/gallery/bhu.jpg",
   },
 ];
 
