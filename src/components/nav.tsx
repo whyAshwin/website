@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { Magnetic } from "./magnetic";
 
 export function Nav() {
-  const [active, setActive] = useState<string>("top");
+  const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,18 +23,24 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll-spy
+  // Scroll-spy. What leaves the band matters as much as what enters it: the
+  // intro and the playground aren't nav sections, so without the removal pass
+  // the last section that was lit stayed lit through a whole screen of them.
+  // Non-null only while a nav section owns the middle of the viewport.
   useEffect(() => {
-    const ids = ["top", ...sections.map((s) => s.id)];
-    const els = ids
-      .map((id) => document.getElementById(id))
+    const els = sections
+      .map((s) => document.getElementById(s.id))
       .filter((el): el is HTMLElement => Boolean(el));
+    const inBand = new Set<string>();
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
+          if (entry.isIntersecting) inBand.add(entry.target.id);
+          else inBand.delete(entry.target.id);
         });
+        // Sections are contiguous, so only a boundary ever puts two in the band.
+        setActive(sections.map((s) => s.id).find((id) => inBand.has(id)) ?? null);
       },
       { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
     );

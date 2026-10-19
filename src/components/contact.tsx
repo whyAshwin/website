@@ -3,13 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, Copy, FileText } from "lucide-react";
 import { profile, socials } from "@/lib/content";
-import { useCurrentYear } from "@/lib/use-current-year";
 import { Reveal } from "./reveal";
 import { SocialIcon } from "./social-icon";
 
 export function Contact() {
   const [copied, setCopied] = useState(false);
-  const year = useCurrentYear();
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(
@@ -89,19 +87,6 @@ export function Contact() {
           </div>
         </Reveal>
       </div>
-
-      <footer className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-line pt-8 text-xs text-faint sm:flex-row">
-        <p className="font-mono">© {year} {profile.name}</p>
-        <p className="font-mono">
-          Built with{" "}
-          {/* The credit is the joke: the stack is struck out, and the thing
-              that actually did the work gets the only loud colour on the page.
-              `<s>` because the claim is no longer accurate — not `<del>`,
-              which would mean it was edited out of a document. */}
-          <s className="line-through opacity-60">Next.js, Tailwind &amp; Framer Motion</s>{" "}
-          <span className="text-poppy">🤖 AI</span>
-        </p>
-      </footer>
     </section>
   );
 }
