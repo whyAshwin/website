@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, ChevronUp, Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { sfx } from "@/lib/audio";
 
 type Track = {
   title: string;
@@ -82,6 +83,7 @@ export function MusicPlayer() {
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [ducked, setDucked] = useState(false);
 
   const track = PLAYLIST[index];
   const progress = duration > 0 ? (time / duration) * 100 : 0;
@@ -89,6 +91,15 @@ export function MusicPlayer() {
   useEffect(() => {
     playingRef.current = playing;
   }, [playing]);
+
+  // Step back while the playground fires a cue, so the two never fight. The
+  // subscribe call keeps this a listener rather than a poll.
+  useEffect(() => sfx.subscribeDuck(setDucked), []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) audio.volume = sfx.duckLevel;
+  }, [ducked]);
 
   /** Swap tracks. A stable callback, so listeners are attached once. */
   const go = useCallback((delta: number) => {

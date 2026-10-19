@@ -158,22 +158,6 @@
   }
 }
 
-/* Playground: staggered reveals for decision cards + results panel */
-.verdict-in {
-  animation: verdict-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes verdict-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 /* Faint blueprint grid */
 .grid-lines {
   background-image:
@@ -211,50 +195,6 @@
     var(--color-line-strong) 70%,
     transparent
   );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Playground lever — a range input wearing the site's own clothes     */
-/*  Thumb travel is 11px..width-11px, which is what the visual track    */
-/*  in nudge-lab.tsx insets itself by.                                  */
-/* ------------------------------------------------------------------ */
-.lever {
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-}
-.lever::-webkit-slider-runnable-track {
-  height: 8px;
-  background: transparent;
-}
-.lever::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 22px;
-  width: 22px;
-  margin-top: -7px;
-  border-radius: 999px;
-  background: #fff;
-  border: 3px solid var(--color-accent);
-  box-shadow: 0 6px 20px rgba(124, 108, 255, 0.55);
-  cursor: grab;
-  transition: box-shadow 0.2s ease;
-}
-.lever:hover::-webkit-slider-thumb,
-.lever:focus-visible::-webkit-slider-thumb {
-  box-shadow: 0 8px 26px rgba(124, 108, 255, 0.8);
-}
-.lever::-moz-range-track {
-  height: 8px;
-  background: transparent;
-}
-.lever::-moz-range-thumb {
-  height: 22px;
-  width: 22px;
-  border-radius: 999px;
-  background: #fff;
-  border: 3px solid var(--color-accent);
-  box-shadow: 0 6px 20px rgba(124, 108, 255, 0.55);
-  cursor: grab;
 }
 
 /* ------------------------------------------------------------------ */
