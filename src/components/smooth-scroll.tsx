@@ -35,7 +35,11 @@ export default function SmoothScroll() {
       const el = document.querySelector(hash);
       if (!el) return;
       event.preventDefault();
-      lenis.scrollTo(el as HTMLElement, { offset: -90, duration: 1.1 });
+      // No `offset` here on purpose: Lenis already subtracts the target's
+      // `scroll-margin-top`, so passing the header height again would land the
+      // section twice as far down (96 + 96 = 192px) and leave a dead band
+      // under the header. One source of truth: the sections' `scroll-mt-24`.
+      lenis.scrollTo(el as HTMLElement, { duration: 1.1 });
       history.replaceState(null, "", hash);
     };
 

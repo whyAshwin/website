@@ -9,7 +9,7 @@ import { RevealGroup, revealItem } from "./reveal";
 
 export function Education() {
   return (
-    <section className="relative mx-auto max-w-6xl px-6 py-24">
+    <section id="education" className="relative mx-auto max-w-6xl scroll-mt-24 px-6 py-24">
       <SectionHeading kicker="Education" title="Where the thinking was formed" />
 
       <RevealGroup className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2" stagger={0.1}>

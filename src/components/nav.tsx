@@ -89,15 +89,19 @@ export function Nav() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Magnetic strength={0.25} className="hidden sm:block">
-              <Link
-                href="/resume"
-                className="inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-95"
-              >
-                <FileText className="size-3.5" />
-                Resume
-              </Link>
-            </Magnetic>
+            {/* The breakpoint class lives on a wrapper: Magnetic sets
+                display:inline-block inline, which would beat `hidden`. */}
+            <div className="hidden sm:block">
+              <Magnetic strength={0.25}>
+                <Link
+                  href="/resume"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] active:scale-95"
+                >
+                  <FileText className="size-3.5" />
+                  Resume
+                </Link>
+              </Magnetic>
+            </div>
 
             <button
               type="button"

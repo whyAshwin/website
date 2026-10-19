@@ -356,9 +356,16 @@ export const socials = [
   { label: "GitHub", href: "https://github.com/whyAshwin", icon: "github" },
 ] as const;
 
+/**
+ * Nav order is the page's own order, so the highlight walks down the header in
+ * the same direction as the page: About, Work, Experience, Education, Contact.
+ * Anything above About (hero, stats, playground) belongs to the intro and
+ * lights nothing. Keep this list sorted the way the sections are rendered.
+ */
 export const sections = [
+  { id: "about", label: "About" },
   { id: "work", label: "Work" },
   { id: "experience", label: "Experience" },
-  { id: "about", label: "About" },
+  { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
 ] as const;
