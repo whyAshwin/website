@@ -20,10 +20,12 @@ import { SceneFaceId } from "./scene-faceid";
  * player clear of the cards, and the min-height stops the cards collapsing to
  * nothing on a viewport too short to hold them.
  *
- * Below `lg` the player's pill sits high, in its mobile safe-area position.
- * Reserving for it would cost every short viewport ~70px of drawing, so the
- * pill overlaps the corner of the left card instead — the cards are just
- * surrounded by the player's glass, not obscured by it.
+ * Below `lg` the player's pill sits high, in its mobile safe-area position, and
+ * it will sit over the bottom-left corner of the left card. Reserving the whole
+ * safe area (~150px) would cost every short viewport the drawing it came for,
+ * so the overlap is deliberate: the pill covers the card's corner and a strip
+ * of the left card's button edge, but the label is centred and the button stays
+ * usable, which is a cheaper trade than a smaller scene on every phone.
  */
 export function Playground() {
   const soundOn = useSoundEnabled();

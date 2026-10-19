@@ -79,8 +79,14 @@ export function ScenePanel({
             placeholder to verdict from reflowing the card, and the height gate
             is where a short viewport decides the drawing matters more than the
             second beat: 3 lines of verdict always, plus the note's rule and
-            margin and 2 more lines when there is room for it. */}
-        <div className="mt-3 min-h-[3lh] shrink-0 [@media(min-height:750px)]:min-h-[calc(5lh+17px)]">
+            margin and 2 more lines when there is room for it.
+
+            The prose's type scale has to live on this element, not on the
+            paragraph inside it: `lh` resolves against the line-height of the
+            element it is written on, so putting it here is what makes one `lh`
+            mean one line of verdict. Left to inherit, it would be measured in
+            the page's 16px/24px and quietly cost every stage ~20px. */}
+        <div className="mt-3 min-h-[3lh] shrink-0 text-[11px] leading-relaxed [@media(min-height:750px)]:min-h-[calc(5lh+17px)] sm:text-xs lg:text-sm">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={hasRun ? "verdict" : "placeholder"}
@@ -89,7 +95,7 @@ export function ScenePanel({
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
-              <p className="line-clamp-3 text-pretty text-[11px] leading-relaxed text-fg/90 sm:text-xs lg:text-sm">
+              <p className="line-clamp-3 text-pretty text-fg/90">
                 {hasRun ? verdict : placeholder}
               </p>
               {hasRun && (
