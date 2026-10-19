@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Globe2, Layers, Rocket, Wand2 } from "lucide-react";
+import { ArrowUpRight, Bot, Globe2, Layers, Rocket, Wand2 } from "lucide-react";
 import { RevealGroup, revealItem } from "./reveal";
 import { SpotlightCard } from "./spotlight-card";
 
@@ -186,6 +186,10 @@ export function Bento() {
                 <Rocket className="mt-0.5 size-3.5 shrink-0 text-accent" />
                 Make complexity disappear.
               </li>
+              <li className="flex gap-2">
+                <Rocket className="mt-0.5 size-3.5 shrink-0 text-accent" />
+                Automate the boring parts.
+              </li>
             </ul>
           </SpotlightCard>
         </motion.div>
@@ -203,6 +207,36 @@ export function Bento() {
               </span>
             </SpotlightCard>
           </a>
+        </motion.div>
+
+        {/* AI in production. The résumé leads with this and the page had
+            nowhere to put it: the agent that reads a therapy session and
+            writes the summary. Same shape as its neighbours — label, one
+            thought, one number — because the grid reads as one voice. The
+            number is plain text, not the animated Counter: a figure that
+            renders as "0K+" in the HTML until someone scrolls to it would be
+            a false claim to anything reading the page without a viewport. */}
+        <motion.div variants={revealItem} className="md:col-span-2">
+          <SpotlightCard className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-line bg-surface p-5">
+            <div>
+              <div className="flex items-center gap-2 text-muted">
+                <Bot className="size-4 text-accent" />
+                <span className="font-mono text-[11px] uppercase tracking-[0.2em]">
+                  AI in production
+                </span>
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-muted">
+                An agent reads each therapy session and writes the summary before the therapist
+                asks for it — so nobody answers the same question twice.
+              </p>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-gradient text-2xl font-semibold tracking-tight">15K+</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-faint">
+                sessions a month
+              </span>
+            </div>
+          </SpotlightCard>
         </motion.div>
       </RevealGroup>
     </section>
