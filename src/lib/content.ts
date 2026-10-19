@@ -2,17 +2,19 @@ export const profile = {
   name: "Ashwin Baranwal",
   firstName: "Ashwin",
   role: "Product Manager",
-  /** The hero line, in two halves: muted opening, then the emphasised turn. */
-  tagline: "A product manager who ships.",
-  taglineEmphasis:
-    "I find the mess in a product and clear it — most recently with an AI agent that writes a therapist's session summary before the session starts.",
   /**
-   * The short profile, printed under the About heading. The whole arc in three
-   * sentences: where the instinct came from, what he ships now, and the bar he
-   * holds work to.
+   * The hero line, in two halves: muted opening, then the emphasised turn.
+   * Kept to a sentence it can carry out loud — the work is proved further
+   * down the page, so this only has to sound like the person who did it.
+   */
+  tagline: "Product manager by title,",
+  taglineEmphasis: "builder by compulsion.",
+  /**
+   * The short profile under the About heading. Temperament, not history: what
+   * the rest of the page's cards are evidence for.
    */
   blurb:
-    "A wholesale business of my own, then an MBA at IIM Sirmaur, then B2B marketplaces, EV fleets and mental-wellness software. Today I ship AI that removes work instead of adding it — an agent that writes 15,000+ session summaries a month, an LMS that retired a vendor. My favourite brief: make the product ask less of the person using it.",
+    "Two instincts run the show: curiosity about how things actually work, and impatience with anything that wastes someone's afternoon. Product is where they argue — and impatience usually wins.",
   email: "hey@ashwinbaranwal.com",
   location: "India",
   resume: "/resume",

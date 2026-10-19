@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s — Ashwin Baranwal",
   },
   description:
-    "Product manager who ships AI that removes work: an agent writing 15,000+ therapy session summaries a month, and the LMS that retired a vendor.",
+    "Product manager by title, builder by compulsion — AI in 15,000+ therapy sessions a month, an LMS that retired a vendor, and a playground of tiny builds.",
   keywords: [
     "Ashwin Baranwal",
     "Product Manager",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     title: "Ashwin Baranwal — Product Manager",
     description:
-      "A product manager who ships — an AI agent writing 15,000+ therapy session summaries a month, an LMS that retired a vendor, and a playground of tiny builds.",
+      "Product manager by title, builder by compulsion. Selected work, case studies, and a playground of small builds.",
     images: [{ url: "/profile.jpg", width: 1536, height: 1182, alt: "Ashwin Baranwal" }],
   },
   twitter: {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     creator: "@whyashwin",
     title: "Ashwin Baranwal — Product Manager",
     description:
-      "A product manager who ships AI that removes work — selected work, case studies and a playground.",
+      "Product manager by title, builder by compulsion. Work, case studies, and a playground of small builds.",
     images: ["/profile.jpg"],
   },
   icons: { icon: "/favicon.ico" },
