@@ -57,9 +57,6 @@ export function Playground() {
         />
 
         <div className="flex shrink-0 flex-wrap items-center gap-2">
-          <p className="mr-1 hidden max-w-[13rem] text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-faint lg:block">
-            Drawn in the browser · sound synthesised live
-          </p>
           <button
             type="button"
             onClick={() => setSignal((n) => n + 1)}
