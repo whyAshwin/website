@@ -398,7 +398,11 @@ class SoundEngine {
 
 export const sfx = new SoundEngine();
 
-/** Reactive mute state for the toggle in the playground header. */
+/**
+ * Reactive mute state. Nothing consumes it right now — the playground's own
+ * toggle was removed — but the engine's mute stays wired so a control can be
+ * dropped back in without touching the cues.
+ */
 export function useSoundEnabled() {
   return useSyncExternalStore(sfx.subscribe, sfx.getSnapshot, sfx.getServerSnapshot);
 }

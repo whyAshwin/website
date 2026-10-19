@@ -9,7 +9,8 @@ export function SectionHeading({
   size = "default",
   className,
 }: {
-  kicker: string;
+  /** Omit to drop the eyebrow line entirely. */
+  kicker?: string;
   title: string;
   description?: string;
   align?: "left" | "center";
@@ -31,20 +32,22 @@ export function SectionHeading({
         className,
       )}
     >
-      <p
-        className={cn(
-          "font-mono uppercase text-accent",
-          compact ? "text-[10px] tracking-[0.24em]" : "text-xs tracking-[0.3em]",
-        )}
-      >
-        {kicker}
-      </p>
+      {kicker && (
+        <p
+          className={cn(
+            "font-mono uppercase text-accent",
+            compact ? "text-[10px] tracking-[0.24em]" : "text-xs tracking-[0.3em]",
+          )}
+        >
+          {kicker}
+        </p>
+      )}
       <h2
         className={cn(
           "font-semibold tracking-tight",
-          compact
-            ? "mt-2 text-[clamp(1.25rem,2.4vw,1.9rem)]"
-            : "mt-3 text-[clamp(1.9rem,5vw,3rem)]",
+          compact ? "text-[clamp(1.25rem,2.4vw,1.9rem)]" : "text-[clamp(1.9rem,5vw,3rem)]",
+          // The margin belongs to the pair, not to the title.
+          kicker && (compact ? "mt-2" : "mt-3"),
         )}
       >
         {title}

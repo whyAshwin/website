@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type CSSProperties } from "react";
+import { type CSSProperties } from "react";
 import { MotionConfig, motion, type Variants } from "motion/react";
 import { X } from "lucide-react";
 import { useBeats, type Beat } from "@/lib/use-beats";
@@ -106,19 +106,13 @@ const HALO: Variants = {
   dead: { opacity: 0.22 },
 };
 
-export function SceneMouse({ runSignal = 0 }: { runSignal?: number }) {
+export function SceneMouse() {
   const { phase, runId, run, hasRun } = useBeats(BEATS, "idle", "dead", "deflate");
   const step = ORDER.indexOf(phase);
   const at = (p: Phase) => step >= ORDER.indexOf(p);
 
   const idle = phase === "idle";
   const dead = at("dead");
-
-  // "Run both" in the section header drives the scenes from the parent.
-  useEffect(() => {
-    if (runSignal === 0) return;
-    run();
-  }, [runSignal, run]);
 
   const label = !hasRun
     ? "A Magic Mouse, right side up and completely blank on top."

@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Play, Volume2, VolumeX } from "lucide-react";
-import { sfx, useSoundEnabled } from "@/lib/audio";
-import { cn } from "@/lib/utils";
+import { useEffect } from "react";
+import { sfx } from "@/lib/audio";
 import { SectionHeading } from "./section-heading";
 import { SceneMouse } from "./scene-mouse";
 import { SceneFaceId } from "./scene-faceid";
@@ -26,11 +24,12 @@ import { SceneFaceId } from "./scene-faceid";
  * so the overlap is deliberate: the pill covers the card's corner and a strip
  * of the left card's button edge, but the label is centred and the button stays
  * usable, which is a cheaper trade than a smaller scene on every phone.
+ *
+ * There is no section-level trigger: the heading spans the full width and each
+ * card runs from its own button, so nothing on the page has to explain the
+ * comparison before it is seen.
  */
 export function Playground() {
-  const soundOn = useSoundEnabled();
-  const [signal, setSignal] = useState(0);
-
   // Warm the audio context on the first interaction anywhere on the page, so a
   // cue never has to race the context's resume() from a cold start.
   useEffect(() => {
@@ -48,42 +47,16 @@ export function Playground() {
       id="playground"
       className="relative mx-auto flex h-svh min-h-[37rem] max-w-6xl scroll-mt-20 flex-col justify-center px-4 pb-20 pt-20 sm:min-h-[36rem] sm:px-6"
     >
-      <div className="flex shrink-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
-        <SectionHeading
-          size="compact"
-          kicker="Product playground"
-          title="Two products. One question: what did it ask of you?"
-          description="Same company, same decade, both in millions of hands. One adds a decision at the worst possible moment; the other never lets one form."
-        />
-
-        <div className="flex shrink-0 flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setSignal((n) => n + 1)}
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-3.5 py-2 text-xs font-semibold text-bg transition-transform hover:scale-[1.02] active:scale-[0.98] sm:text-sm"
-          >
-            <Play className="size-3.5 fill-current" />
-            Run both
-          </button>
-
-          <button
-            type="button"
-            aria-pressed={soundOn}
-            onClick={sfx.toggle}
-            className={cn(
-              "inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-medium transition-colors sm:text-sm",
-              soundOn ? "border-line-strong text-fg" : "border-line text-faint",
-            )}
-          >
-            {soundOn ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
-            {soundOn ? "Sound on" : "Sound off"}
-          </button>
-        </div>
-      </div>
+      <SectionHeading
+        size="compact"
+        className="shrink-0 max-w-none"
+        title="Two products. One question: what did it ask of you?"
+        description="Same company, same decade, both in millions of hands. One adds a decision at the worst possible moment; the other never lets one form."
+      />
 
       <div className="mt-4 flex min-h-0 flex-1 flex-row gap-3 sm:mt-6 sm:gap-4">
-        <SceneMouse runSignal={signal} />
-        <SceneFaceId runSignal={signal} />
+        <SceneMouse />
+        <SceneFaceId />
       </div>
     </section>
   );

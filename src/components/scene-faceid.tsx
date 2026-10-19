@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, type CSSProperties } from "react";
+import { type CSSProperties } from "react";
 import { MotionConfig, motion, useReducedMotion, type Variants } from "motion/react";
 import { useBeats, type Beat } from "@/lib/use-beats";
 import { fitScale } from "@/lib/fit";
@@ -170,16 +170,11 @@ const GLOW: Variants = {
   home: { opacity: 0.2, transition: { duration: 0.8 } },
 };
 
-export function SceneFaceId({ runSignal = 0 }: { runSignal?: number }) {
+export function SceneFaceId() {
   const { phase, runId, run, hasRun } = useBeats(BEATS, "idle", "home", "unlock");
   const unlocked = phase === "unlock" || phase === "home";
   /** The shackle's flip is CSS, so it opts out of the movement by hand. */
   const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (runSignal === 0) return;
-    run();
-  }, [runSignal, run]);
 
   const label = !hasRun
     ? "An iPhone showing the Face ID mark, waiting."
