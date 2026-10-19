@@ -349,25 +349,35 @@ class SoundEngine {
         return this.tone(ctx, out, { freq: hz(2350), decay: 0.03, peak: 0.032, attack: 0.002 }, t0, gain);
       }
 
-      // The payoff: a latch letting go, then a maj7 opening up.
+      // The recognition ding, and nothing else: one mallet strike on glass.
+      // The ear splits it into "ti-ding" because the bright partials die inside
+      // a tenth of a second while the fundamental keeps ringing — the shape of
+      // a decision being taken for you, which is the whole product story.
+      // Nothing is arpeggiated: a chord here would read as a reward, and
+      // nothing was earned.
       case "unlock": {
-        this.hiss(ctx, out, { attack: 0.001, decay: 0.02, peak: 0.11, filter: { type: "bandpass", freq: 1900, q: 2.2 } }, t0, gain);
-        this.hiss(ctx, out, { attack: 0.002, decay: 0.05, peak: 0.085, filter: { type: "bandpass", freq: 780, q: 1.2 } }, t0 + 0.02, gain);
-
-        const chord: Array<[number, number, number, number]> = [
-          [523.25, 0, 0.055, 1.5],
-          [659.25, 0.045, 0.045, 1.5],
-          [783.99, 0.08, 0.05, 1.6],
-          [987.77, 0.125, 0.04, 1.7],
-          [1318.51, 0.17, 0.03, 1.8],
-        ];
-        for (const [freq, at, peak, decay] of chord) {
-          this.tone(ctx, out, { freq: hz(freq), decay, peak, attack: 0.012 }, t0 + at, gain);
-          this.tone(ctx, out, { type: "triangle", freq: hz(freq) * 2, decay: decay * 0.55, peak: peak * 0.22, attack: 0.01 }, t0 + at, gain);
-        }
-        this.tone(ctx, out, { freq: hz(130.81), to: hz(196), decay: 0.7, peak: 0.09, attack: 0.05 }, t0, gain);
-        this.tone(ctx, out, { freq: hz(3000), to: hz(5200), decay: 0.5, peak: 0.016, attack: 0.04 }, t0 + 0.06, gain);
-        return 1.9;
+        // The strike: twelve milliseconds of filtered noise. This is the "t".
+        this.hiss(
+          ctx,
+          out,
+          { attack: 0.0008, decay: 0.012, peak: 0.06, filter: { type: "bandpass", freq: 5000, q: 1.1 } },
+          t0,
+          gain,
+        );
+        // "ti" — the bright partials, gone almost at once. They have to be
+        // nearly as loud as the root at the instant of the strike, or the ear
+        // reads a single soft note instead of a struck one.
+        this.tone(ctx, out, { freq: hz(5274), decay: 0.07, peak: 0.03, attack: 0.001 }, t0, gain);
+        this.tone(ctx, out, { freq: hz(3955.5), decay: 0.13, peak: 0.085, attack: 0.001 }, t0, gain);
+        // "ding" — the two tones that carry, an octave over the root.
+        this.tone(ctx, out, { freq: hz(2637), decay: 0.3, peak: 0.055, attack: 0.001 }, t0, gain);
+        // The root, and the only part that is still there a moment later. The
+        // long ramp is the ring: an exponential fall to a fixed floor is mostly
+        // over by a third of the way through, so this is what buys the tail.
+        this.tone(ctx, out, { freq: hz(1318.5), decay: 1.05, peak: 0.095, attack: 0.002 }, t0, gain);
+        // A little weight underneath, so it lands instead of floating.
+        this.tone(ctx, out, { type: "triangle", freq: hz(659.25), decay: 0.5, peak: 0.04, attack: 0.005 }, t0, gain);
+        return 0.9;
       }
 
       // Swipe up, and the phone arriving.

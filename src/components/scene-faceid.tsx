@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, type CSSProperties } from "react";
-import { MotionConfig, motion, type Variants } from "motion/react";
-import { Lock, LockOpen } from "lucide-react";
+import { MotionConfig, motion, useReducedMotion, type Variants } from "motion/react";
 import { useBeats, type Beat } from "@/lib/use-beats";
 import { fitScale } from "@/lib/fit";
 import { ScenePanel } from "./scene-panel";
@@ -77,7 +76,9 @@ const BEATS: readonly Beat<Phase>[] = [
   { at: 0, phase: "wake", cue: "swipe", opts: { gain: 0.5 } },
   { at: 620, phase: "scan", cue: "scan" },
   ...TICK_BEATS,
-  { at: 1740, phase: "match", cue: "tick", opts: { semitones: 15, gain: 1.2 } },
+  // Softer than the scan's last dot so the ding that follows is the event, not
+  // a second ping competing with it.
+  { at: 1740, phase: "match", cue: "tick", opts: { semitones: 12, gain: 0.9 } },
   { at: 2060, phase: "unlock", cue: "unlock" },
   { at: 3000, phase: "home", cue: "swipe", opts: { gain: 0.6 } },
 ];
@@ -103,6 +104,20 @@ const GLYPH: Variants = {
   match: { opacity: 0, scale: 0.86 },
   unlock: { opacity: 0, scale: 0.86 },
   home: { opacity: 0, scale: 0.86 },
+};
+
+/** The padlock sits still while the phone works, then settles back. */
+const LOCK: Variants = {
+  idle: { opacity: 0.8, scale: 1, transition: { duration: 0.4, ease: EASE_OUT } },
+  wake: { opacity: 0.95, scale: 1, transition: { duration: 0.4, ease: EASE_OUT } },
+  scan: { opacity: 0.9, scale: 1 },
+  match: { opacity: 1, scale: 1 },
+  unlock: {
+    opacity: 1,
+    scale: [1, 1.14, 1],
+    transition: { duration: 0.5, ease: EASE_OUT },
+  },
+  home: { opacity: 0, scale: 0.94, transition: { duration: 0.45, ease: EASE_OUT } },
 };
 
 const SCANNER: Variants = {
@@ -158,6 +173,8 @@ const GLOW: Variants = {
 export function SceneFaceId({ runSignal = 0 }: { runSignal?: number }) {
   const { phase, runId, run, hasRun } = useBeats(BEATS, "idle", "home", "unlock");
   const unlocked = phase === "unlock" || phase === "home";
+  /** The shackle's flip is CSS, so it opts out of the movement by hand. */
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     if (runSignal === 0) return;
@@ -251,20 +268,42 @@ export function SceneFaceId({ runSignal = 0 }: { runSignal?: number }) {
                   </span>
                 </div>
 
-                {/* Padlock — locked, then not. */}
-                <div className="absolute inset-x-0 top-[52px] z-10 flex justify-center">
-                  <motion.span
-                    animate={{ scale: unlocked ? [1, 1.22, 1] : 1 }}
-                    transition={{ duration: 0.5, ease: EASE_OUT }}
-                    className="text-white/80"
-                  >
-                    {unlocked ? (
-                      <LockOpen className="size-[17px]" strokeWidth={2.2} />
-                    ) : (
-                      <Lock className="size-[17px]" strokeWidth={2.2} />
-                    )}
-                  </motion.span>
-                </div>
+                {/* Padlock — drawn, so the shackle is a real hinge that swings
+                    clear of the body. iOS animates one part here rather than
+                    cross-fading two glyphs, which is what makes it read as a
+                    lock flipping open instead of an icon being swapped.
+
+                    Motion owns the fade and the pop on the wrapper, but it
+                    writes `transform-origin` on SVG children and overwrites
+                    anything set here, so the hinge rides the individual
+                    `rotate` property instead — which Motion never touches.
+                    `fill-box` pins the origin to the shackle's own corner:
+                    0%/100% is the bottom of its left leg, the hinge, with no
+                    magic numbers. The overshoot in the curve is the flip. */}
+                <motion.div
+                  aria-hidden
+                  variants={LOCK}
+                  className="absolute inset-x-0 top-[52px] z-10 flex justify-center text-white"
+                >
+                  <svg viewBox="0 0 24 24" className="size-[17px]">
+                    {/* Shackle first, body over it: the leg disappears into the
+                        body when locked, and swings clear when it opens. */}
+                    <path
+                      d="M8.3 11.6V8.2a3.7 3.7 0 0 1 7.4 0v3.4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.4"
+                      strokeLinecap="round"
+                      className={unlocked ? "[rotate:-46deg]" : "[rotate:0deg]"}
+                      style={{
+                        transformBox: "fill-box",
+                        transformOrigin: "0% 100%",
+                        transition: reduce ? "none" : "rotate 460ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+                      }}
+                    />
+                    <rect x="4" y="11.6" width="16" height="11.4" rx="3.8" fill="currentColor" />
+                  </svg>
+                </motion.div>
 
                 {/* The Face ID mark, before anything starts. */}
                 <motion.div
