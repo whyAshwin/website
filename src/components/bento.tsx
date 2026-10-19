@@ -108,8 +108,11 @@ export function Bento() {
                 sizes="(max-width: 768px) 100vw, 640px"
                 className="object-cover opacity-60 transition-transform duration-700 hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
-              <div className="relative flex h-full min-h-[320px] flex-col justify-end p-7">
+              {/* Scrim sits at the top because the text moved there. Keeping it
+                  at the bottom was what buried the face: the words landed on
+                  the one part of the frame that matters. */}
+              <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg/40 to-transparent" />
+              <div className="relative flex h-full min-h-[320px] flex-col justify-start p-7">
                 <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent">
                   Ground → Grid
                 </p>
