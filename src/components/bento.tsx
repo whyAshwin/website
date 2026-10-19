@@ -3,7 +3,9 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Bot, Globe2, Layers, Rocket, Wand2 } from "lucide-react";
+import { profile } from "@/lib/content";
 import { RevealGroup, revealItem } from "./reveal";
+import { SectionHeading } from "./section-heading";
 import { SpotlightCard } from "./spotlight-card";
 
 /** A short animated dashed line whose dashes travel along its length. */
@@ -26,7 +28,30 @@ function FlowLine({ vertical = false, className = "" }: { vertical?: boolean; cl
   );
 }
 
-const toolkit = ["Discovery", "PRDs", "Figma", "SQL", "A/B Testing", "n8n", "Analytics", "GTM"];
+/**
+ * The toolkit in the résumé's own three groups: the product craft, the
+ * engineering he now does himself, and the tools holding it up. Kept as three
+ * flowing lines of chips rather than one long wall — the dashed connector is
+ * this card's motif, so a group's chips stay connected to each other and the
+ * last one doesn't trail a dash into whitespace.
+ */
+const TOOLKIT = [
+  {
+    group: "Product",
+    items: ["Discovery", "PRDs", "User research", "A/B testing", "Metrics", "GTM"],
+  },
+  {
+    group: "AI & engineering",
+    // Kept to the four that pair up into even rows: "Rapid MVP builds" would
+    // orphan a row of its own, and the footnote below says the same thing
+    // anyway.
+    items: ["Agentic AI", "Prompt engineering", "SQL", "API integrations"],
+  },
+  {
+    group: "Tools",
+    items: ["Figma", "n8n", "JIRA", "Miro", "Zapier"],
+  },
+] as const;
 
 /**
  * The watermark on the languages card, and its whole argument in one glance:
@@ -60,12 +85,12 @@ export function Bento() {
 
   return (
     <section id="about" className="relative mx-auto max-w-6xl scroll-mt-24 px-6 py-20">
-      <header className="mb-10 max-w-2xl">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">About</p>
-        <h2 className="mt-3 text-[clamp(1.9rem,5vw,3rem)] font-semibold tracking-tight">
-          The short profile
-        </h2>
-      </header>
+      <SectionHeading
+        kicker="About"
+        title="The short profile"
+        description={profile.blurb}
+        className="mb-10"
+      />
 
       <RevealGroup className="grid grid-cols-1 gap-4 md:grid-cols-6">
         {/* Feature card with photo */}
@@ -95,23 +120,37 @@ export function Bento() {
 
         {/* Toolkit with flowing connectors */}
         <motion.div variants={revealItem} className="md:col-span-2">
-          <SpotlightCard className="h-full rounded-3xl border border-line bg-surface p-5">
+          <SpotlightCard className="flex h-full flex-col rounded-3xl border border-line bg-surface p-5">
             <div className="flex items-center gap-2 text-muted">
               <Layers className="size-4 text-accent" />
               <span className="font-mono text-[11px] uppercase tracking-[0.2em]">Toolkit</span>
             </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {toolkit.map((item, i) => (
-                <span key={item} className="relative">
-                  <span className="inline-flex rounded-lg bg-surface-3 px-2.5 py-1.5 font-mono text-xs text-fg/90">
-                    {item}
-                  </span>
-                  {i < toolkit.length - 1 && (
-                    <FlowLine className="absolute -right-2 top-1/2 h-px w-2 -translate-y-1/2 opacity-70" />
-                  )}
-                </span>
+            <div className="mt-4 space-y-4">
+              {TOOLKIT.map((group) => (
+                <div key={group.group}>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
+                    {group.group}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {group.items.map((item, i) => (
+                      <span key={item} className="relative">
+                        <span className="inline-flex rounded-lg bg-surface-3 px-2.5 py-1.5 font-mono text-xs text-fg/90">
+                          {item}
+                        </span>
+                        {i < group.items.length - 1 && (
+                          <FlowLine className="absolute -right-2 top-1/2 h-px w-2 -translate-y-1/2 opacity-70" />
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
+            {/* The résumé names his build stack; naming it here is the whole
+                point of the AI row above — he ships MVPs himself, with agents. */}
+            <p className="mt-auto pt-4 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+              MVPs shipped with Vorflux &amp; OpenCode
+            </p>
           </SpotlightCard>
         </motion.div>
 
@@ -226,8 +265,8 @@ export function Bento() {
                 </span>
               </div>
               <p className="mt-4 text-sm leading-relaxed text-muted">
-                An agent reads each therapy session and writes the summary before the therapist
-                asks for it — so nobody answers the same question twice.
+                An agent reads the session&apos;s transcripts and reports into a 100-word summary
+                before the therapist asks — so nobody has to repeat themselves.
               </p>
             </div>
             <div className="flex items-baseline gap-2">

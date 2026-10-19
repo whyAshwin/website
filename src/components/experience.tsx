@@ -22,7 +22,7 @@ export function Experience() {
       <SectionHeading
         kicker="Experience"
         title="Building products that solve real problems"
-        description="From founding a wholesale venture to shipping fintech-grade tooling — a bias for outcomes runs through all of it."
+        description="From a wholesale venture of my own to an AI agent inside 15,000 therapy sessions a month — every role ends with something shipped and a number that moved."
       />
 
       <div ref={ref} className="relative mt-14 pl-8 sm:pl-12">

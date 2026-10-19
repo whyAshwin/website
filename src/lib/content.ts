@@ -2,20 +2,44 @@ export const profile = {
   name: "Ashwin Baranwal",
   firstName: "Ashwin",
   role: "Product Manager",
-  tagline: "A curious mind shaped by the market, sharpened by product.",
+  /** The hero line, in two halves: muted opening, then the emphasised turn. */
+  tagline: "A product manager who ships.",
+  taglineEmphasis:
+    "I find the mess in a product and clear it — most recently with an AI agent that writes a therapist's session summary before the session starts.",
+  /**
+   * The short profile, printed under the About heading. The whole arc in three
+   * sentences: where the instinct came from, what he ships now, and the bar he
+   * holds work to.
+   */
   blurb:
-    "I thrive where real-world hustle meets structured thinking — listening closely, simplifying complexity, and building with intent.",
+    "A wholesale business of my own, then an MBA at IIM Sirmaur, then B2B marketplaces, EV fleets and mental-wellness software. Today I ship AI that removes work instead of adding it — an agent that writes 15,000+ session summaries a month, an LMS that retired a vendor. My favourite brief: make the product ask less of the person using it.",
   email: "hey@ashwinbaranwal.com",
   location: "India",
   resume: "/resume",
 };
 
-/** Headline numbers pulled from real work (kept honest). */
+/**
+ * Headline numbers pulled from real work (kept honest). One per story rather
+ * than one per project — the LMS's speed claim rides in the saving's sub-line,
+ * where it costs a slot nothing.
+ */
 export const stats = [
-  { value: 60, suffix: "×", label: "Faster course creation", sub: "Built the LMS at YourDost" },
-  { value: 37, suffix: "%", label: "Activation lift", sub: "Persona-driven MindGym revamp" },
+  {
+    value: 14,
+    prefix: "+",
+    suffix: "%",
+    label: "Session CSAT",
+    sub: "AI summaries · 15,000+ sessions a month",
+  },
+  { value: 37, suffix: "%", label: "Activation lift", sub: "Persona-routed MindGym revamp" },
   { value: 13, suffix: "K+", label: "Seller App DAU", sub: "from 10K, in one revamp" },
-  { value: 8, prefix: "₹", suffix: "L", label: "Saved annually", sub: "Replaced a 3rd-party LMS" },
+  {
+    value: 10,
+    prefix: "₹",
+    suffix: "L",
+    label: "Saved annually",
+    sub: "Replaced Learnyst · 3 days → <1 hour",
+  },
 ] as const;
 
 export type Experience = {
@@ -34,10 +58,11 @@ export const experience: Experience[] = [
     company: "YourDost",
     context: "Mental Wellness Tech",
     period: "Mar 2026 — Present",
-    stack: ["LMS", "SSO", "A/B Testing", "Personalisation"],
+    stack: ["Agentic AI", "LMS", "SSO", "Multi-tenant", "A/B Testing"],
     highlights: [
-      "Vibe-coded and launched an in-house Learning Management System, securely integrated with the core platform via SSO token exchange — eliminating a third-party tool, saving ₹8L annually and cutting course turnaround from 15 days to 6 hours (60× faster).",
-      "Revamped MindGym by optimising in-app game UX and building a persona-driven engagement strategy — identified 12 personas, ran A/B tests to hyper-personalise drip journeys, driving a 37% activation lift and 24% better Week-4 retention.",
+      "Shipped a context-synthesising AI agent that reads prior transcripts, therapy reports and platform activity into a 100-word session summary — lifting average session CSAT by 14% across 15,000+ sessions a month, saving ~5 minutes of prep per session and ending the repetitive intake questions.",
+      "Vibe-coded a proprietary LMS through agentic coding workflows — SSO token-based auth, multi-tenant routing, personalised course recommendations — replacing Learnyst, a third-party SaaS, to save ₹10L a year and cut course creation from 3 days to under an hour.",
+      "Revamped MindGym by routing users into 12 persona cohorts, each with its own A/B-tested drip journey, alongside core in-app game UX work — a 37% activation lift and 24% better Week-4 retention.",
     ],
   },
   {
@@ -47,7 +72,7 @@ export const experience: Experience[] = [
     period: "May 2025 — Feb 2026",
     stack: ["Dashboard", "Analytics", "n8n", "Integrations"],
     highlights: [
-      "Spearheaded the Badho Seller App revamp (10K+ DAU), rebuilding navigation and the “My Home” dashboard — DAU grew from 10,000 to 13,000+.",
+      "Spearheaded the Badho Seller App revamp (10K+ DAU) — rebuilt navigation and the “My Home” dashboard, left behind scalable UI templates for future rollouts, and grew DAU from 10,000 to 13,000+.",
       "Conceived the Supply Knowledge Center, an in-app video-led help hub, cutting telecaller dependency and support tickets by 28%.",
       "Owned the Badho × Wheelseye integration, bringing GPS tracking into the app — 2,000+ active vehicles in 3 weeks.",
       "Designed Seller Reports, a live analytics module (SKU performance, price deltas, sales trends) that lifted order-fulfilment rates by 4%.",
@@ -146,10 +171,10 @@ export const projects: Project[] = [
   },
   {
     title: "Credit Card Discovery Tool",
-    tag: "MVP Build",
+    tag: "MVP Build + Monetisation",
     year: "2024",
     description:
-      "Found a discovery and education gap in a crowded credit-card market. Built an MVP that profiles users with a few questions and recommends the right card.",
+      "Found a discovery and education gap in a crowded credit-card market. Built an MVP that profiles users with a few questions and recommends the right card — then worked out how the recommendation earns.",
     readout: [
       {
         label: "problem",
@@ -165,7 +190,13 @@ export const projects: Project[] = [
       },
       { label: "metric", value: "72% form completion" },
     ],
-    links: [{ label: "Try the tool", href: "https://whyashwin.github.io/creditcarddiscovery/" }],
+    links: [
+      {
+        label: "Read the case study",
+        href: "https://whyashwin.notion.site/Credit-Card-Discovery-Tool-1f4d75c28c8480ed8a44d6dc29be3e04?pvs=4",
+      },
+      { label: "Try the tool", href: "https://whyashwin.github.io/creditcarddiscovery/" },
+    ],
     status: "live",
     accent: "#4cc9f0",
   },
@@ -212,6 +243,12 @@ export const projects: Project[] = [
       {
         label: "finding",
         value: "Repurchase is a conversation. Campaigns don't have one.",
+      },
+    ],
+    links: [
+      {
+        label: "Read the case study",
+        href: "https://medium.com/@whyashwin/product-development-ai-based-whatsapp-chatbot-for-an-e-commerce-business-9c2b51a455e4",
       },
     ],
     accent: "#2dd4bf",

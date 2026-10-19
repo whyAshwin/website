@@ -19,7 +19,11 @@ function Counter({
   // silently excluded the narrow first-column numbers from ever triggering.
   const inView = useInView(ref, { once: true, margin: "0px 0px -15% 0px" });
   const reduce = useReducedMotion();
-  const [display, setDisplay] = useState(0);
+  // Null until the count starts, so the served HTML — and anyone reading the
+  // page without a viewport — gets the real figure rather than "0". The swap
+  // to zero happens when the observer fires, which is before the number is on
+  // screen, so the count still reads as a count.
+  const [display, setDisplay] = useState<number | null>(null);
 
   useEffect(() => {
     if (!inView || reduce) return;
@@ -39,7 +43,7 @@ function Counter({
   return (
     <span ref={ref} className="tabular-nums">
       {prefix}
-      {Math.round(reduce ? value : display)}
+      {Math.round(reduce ? value : (display ?? value))}
       {suffix}
     </span>
   );

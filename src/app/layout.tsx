@@ -25,13 +25,15 @@ export const metadata: Metadata = {
     template: "%s — Ashwin Baranwal",
   },
   description:
-    "Product Manager shaped by the market and sharpened by product. I thrive where real-world hustle meets structured thinking.",
+    "Product manager who ships AI that removes work: an agent writing 15,000+ therapy session summaries a month, and the LMS that retired a vendor.",
   keywords: [
     "Ashwin Baranwal",
     "Product Manager",
+    "AI Product Manager",
     "Product Management",
-    "Fintech",
+    "Agentic AI",
     "B2B Marketplace",
+    "Mental Wellness",
     "IIM Sirmaur",
     "Portfolio",
   ],
@@ -42,14 +44,15 @@ export const metadata: Metadata = {
     url: siteUrl,
     title: "Ashwin Baranwal — Product Manager",
     description:
-      "A curious mind shaped by the market, sharpened by product. Selected work, experience and case studies.",
+      "A product manager who ships — an AI agent writing 15,000+ therapy session summaries a month, an LMS that retired a vendor, and a playground of tiny builds.",
     images: [{ url: "/profile.jpg", width: 1536, height: 1182, alt: "Ashwin Baranwal" }],
   },
   twitter: {
     card: "summary_large_image",
     creator: "@whyashwin",
     title: "Ashwin Baranwal — Product Manager",
-    description: "A curious mind shaped by the market, sharpened by product.",
+    description:
+      "A product manager who ships AI that removes work — selected work, case studies and a playground.",
     images: ["/profile.jpg"],
   },
   icons: { icon: "/favicon.ico" },
