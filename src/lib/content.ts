@@ -4,17 +4,16 @@ export const profile = {
   role: "Product Manager",
   /**
    * The hero line, in two halves: muted opening, then the emphasised turn.
-   * Kept to a sentence it can carry out loud — the work is proved further
-   * down the page, so this only has to sound like the person who did it.
+   * Two plain sentences — no parallel construction, no punchline after a dash.
    */
-  tagline: "Product manager by title,",
-  taglineEmphasis: "builder by compulsion.",
+  tagline: "I build software that asks less of you.",
+  taglineEmphasis: "Lately that means writing it myself.",
   /**
-   * The short profile under the About heading. Temperament, not history: what
-   * the rest of the page's cards are evidence for.
+   * The short profile under the About heading. What he notices, not what he
+   * has done — the cards on this page are the evidence.
    */
   blurb:
-    "Two instincts run the show: curiosity about how things actually work, and impatience with anything that wastes someone's afternoon. Product is where they argue — and impatience usually wins.",
+    "I've never been able to switch off the part of my brain that notices a bad form. Empty states, error copy, the step where people quietly give up — that's the product, as far as I'm concerned.",
   email: "hey@ashwinbaranwal.com",
   location: "India",
   resume: "/resume",

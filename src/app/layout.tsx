@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s — Ashwin Baranwal",
   },
   description:
-    "Product manager by title, builder by compulsion — AI in 15,000+ therapy sessions a month, an LMS that retired a vendor, and a playground of tiny builds.",
+    "I build software that asks less of you — lately by writing it myself. Product manager in India; marketplaces, EV fleets and mental-wellness software before that.",
   keywords: [
     "Ashwin Baranwal",
     "Product Manager",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     title: "Ashwin Baranwal — Product Manager",
     description:
-      "Product manager by title, builder by compulsion. Selected work, case studies, and a playground of small builds.",
+      "I build software that asks less of you. Selected work, case studies, and a playground of small builds.",
     images: [{ url: "/profile.jpg", width: 1536, height: 1182, alt: "Ashwin Baranwal" }],
   },
   twitter: {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     creator: "@whyashwin",
     title: "Ashwin Baranwal — Product Manager",
     description:
-      "Product manager by title, builder by compulsion. Work, case studies, and a playground of small builds.",
+      "I build software that asks less of you. Work, case studies, a playground of small builds.",
     images: ["/profile.jpg"],
   },
   icons: { icon: "/favicon.ico" },
