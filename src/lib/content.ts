@@ -4,10 +4,11 @@ export const profile = {
   role: "Product Manager",
   /**
    * The hero line, in two halves: muted opening, then the emphasised turn.
-   * Two plain sentences — no parallel construction, no punchline after a dash.
+   * The second half answers why he's the one building — a fact about the
+   * person, not a capability claim.
    */
   tagline: "I build software that asks less of you.",
-  taglineEmphasis: "Lately that means writing it myself.",
+  taglineEmphasis: "I write it myself, because I'm not good at waiting.",
   /**
    * The short profile under the About heading. What he notices, not what he
    * has done — the cards on this page are the evidence.
