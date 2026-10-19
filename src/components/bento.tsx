@@ -28,7 +28,36 @@ function FlowLine({ vertical = false, className = "" }: { vertical?: boolean; cl
 
 const toolkit = ["Discovery", "PRDs", "Figma", "SQL", "A/B Testing", "n8n", "Analytics", "GTM"];
 
+/**
+ * The watermark on the languages card, and its whole argument in one glance:
+ * business and AI sit in the same list as the human greetings, because the
+ * line underneath reads them the same way.
+ *
+ * Every word carries its own duration, delay and travel, so they drift out of
+ * phase and the card never looks like a screenshot. The values are fixed
+ * rather than random — randomness at render time would differ between the
+ * server and the client and hydrate into a jump.
+ *
+ * The human languages stay bigger: the business and AI notes are the finer
+ * layer underneath, which is also what keeps ten words legible in a card this
+ * small.
+ */
+const LANGUAGES = [
+  { text: "नमस्ते", pos: "right-[52%] top-[6%] text-xl", duration: 7.4, delay: 0, dx: 4, dy: -7 },
+  { text: "こんにちは", pos: "right-[5%] top-[6%] text-xl", duration: 9.2, delay: 1.1, dx: -5, dy: -9 },
+  { text: "ARR", pos: "left-[34%] top-[26%] text-sm", duration: 6.9, delay: 0.7, dx: 3, dy: -6 },
+  { text: "churn", pos: "right-[9%] top-[27%] text-sm", duration: 8.1, delay: 2.3, dx: -4, dy: -8 },
+  { text: "Hola", pos: "right-[34%] top-[42%] text-lg", duration: 8.6, delay: 1.7, dx: -4, dy: -6 },
+  { text: "GTM", pos: "left-[6%] top-[43%] text-sm", duration: 7.7, delay: 3.1, dx: 4, dy: -9 },
+  { text: "LLM", pos: "left-[38%] top-[61%] text-sm", duration: 8.8, delay: 2.0, dx: -3, dy: -5 },
+  { text: "AI", pos: "left-[22%] top-[44%] text-base", duration: 7.1, delay: 0.4, dx: 3, dy: -7 },
+  { text: "안녕", pos: "left-[10%] bottom-[14%] text-lg", duration: 9.0, delay: 2.7, dx: 4, dy: -6 },
+  { text: "Hello", pos: "right-[8%] bottom-[9%] text-2xl", duration: 8.3, delay: 1.4, dx: -5, dy: -8 },
+] as const;
+
 export function Bento() {
+  const reduce = useReducedMotion();
+
   return (
     <section id="about" className="relative mx-auto max-w-6xl scroll-mt-24 px-6 py-20">
       <header className="mb-10 max-w-2xl">
@@ -86,23 +115,46 @@ export function Bento() {
           </SpotlightCard>
         </motion.div>
 
-        {/* Languages watermark */}
+        {/* Languages watermark — the card's thesis as texture, with a slow glow
+            underneath so the type has some weather to move through. */}
         <motion.div variants={revealItem} className="md:col-span-2">
-          <SpotlightCard className="relative h-full overflow-hidden rounded-3xl border border-line bg-surface p-5">
+          <SpotlightCard
+            color="rgba(76,201,240,0.30)"
+            className="relative h-full overflow-hidden rounded-3xl border border-line bg-surface p-5"
+          >
             <div aria-hidden className="pointer-events-none absolute inset-0 select-none">
-              {[
-                ["Hello", "right-[10%] bottom-[12%] text-2xl"],
-                ["नमस्ते", "left-[8%] top-[14%] text-xl"],
-                ["こんにちは", "right-[6%] top-[8%] text-xl"],
-                ["안녕", "left-[12%] bottom-[16%] text-lg"],
-                ["Hola", "right-[30%] top-[46%] text-lg"],
-              ].map(([word, pos], i) => (
-                <span
-                  key={i}
-                  className={`absolute font-semibold text-white/[0.07] ${pos}`}
+              <motion.div
+                className="absolute -left-10 top-1/4 size-44 rounded-full bg-accent-2/15 blur-2xl"
+                animate={
+                  reduce ? undefined : { x: [0, 44, 0], y: [0, 28, 0], opacity: [0.45, 0.85, 0.45] }
+                }
+                transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {LANGUAGES.map((word) => (
+                <motion.span
+                  key={word.text}
+                  className={`absolute font-semibold ${
+                    word.text === "AI" ? "text-poppy/20" : "text-white/[0.07]"
+                  } ${word.pos}`}
+                  animate={
+                    reduce
+                      ? undefined
+                      : {
+                          x: [0, word.dx, 0],
+                          y: [0, word.dy, 0],
+                          opacity: [0.65, 1, 0.65],
+                        }
+                  }
+                  transition={{
+                    duration: word.duration,
+                    delay: word.delay,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 >
-                  {word}
-                </span>
+                  {word.text}
+                </motion.span>
               ))}
             </div>
             <div className="relative flex h-full flex-col justify-between gap-6">
