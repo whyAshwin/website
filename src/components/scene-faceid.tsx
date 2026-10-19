@@ -190,7 +190,7 @@ export function SceneFaceId() {
       meta="2017 → today"
       placeholder="One decision, removed from your day."
       verdict="Thirty thousand infrared dots, one glance, and nothing was asked of you. No button, no code, no choice — it had already finished before you were done deciding to look."
-      note="The work is enormous and completely invisible. That is the trick: the best interaction never becomes a decision in the first place."
+      note="The trade is real: it fails behind a mask, and your face becomes a key you can't change. You've never felt that trade — and that is the product."
       cta="Look at it"
       hasRun={hasRun}
       onRun={run}

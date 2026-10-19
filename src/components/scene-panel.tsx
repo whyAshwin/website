@@ -81,12 +81,18 @@ export function ScenePanel({
             second beat: 3 lines of verdict always, plus the note's rule and
             margin and 2 more lines when there is room for it.
 
+            The gate sits at 660px of viewport height. It was 750, which quietly
+            hid the note on an ordinary laptop window (~700px once the browser
+            chrome is subtracted) — the copy is the reason to have a second beat
+            at all, so it now shows wherever the card can hold it, and below 660
+            the drawing keeps its room instead.
+
             The prose's type scale has to live on this element, not on the
             paragraph inside it: `lh` resolves against the line-height of the
             element it is written on, so putting it here is what makes one `lh`
             mean one line of verdict. Left to inherit, it would be measured in
             the page's 16px/24px and quietly cost every stage ~20px. */}
-        <div className="mt-3 min-h-[3lh] shrink-0 text-[11px] leading-relaxed [@media(min-height:750px)]:min-h-[calc(5lh+17px)] sm:text-xs lg:text-sm">
+        <div className="mt-3 min-h-[3lh] shrink-0 text-[11px] leading-relaxed [@media(min-height:660px)]:min-h-[calc(5lh+17px)] sm:text-xs lg:text-sm">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={hasRun ? "verdict" : "placeholder"}
@@ -99,7 +105,7 @@ export function ScenePanel({
                 {hasRun ? verdict : placeholder}
               </p>
               {hasRun && (
-                <p className="mt-2 hidden border-t border-line pt-2 font-mono text-[10px] leading-relaxed text-faint [@media(min-height:750px)]:line-clamp-2">
+                <p className="mt-2 hidden border-t border-line pt-2 font-mono text-[10px] leading-relaxed text-faint [@media(min-height:660px)]:line-clamp-2">
                   {note}
                 </p>
               )}
