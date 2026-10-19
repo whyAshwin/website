@@ -59,13 +59,12 @@ export const experience: Experience[] = [
   {
     role: "Product Manager",
     company: "YourDost",
-    context: "Mental Wellness Tech",
     period: "Mar 2026 — Present",
     stack: ["Agentic AI", "LMS", "SSO", "Multi-tenant", "A/B Testing"],
     highlights: [
-      "Increased average session CSAT score by 14% across 15,000+ monthly sessions by deploying a context-synthesising AI agent — orchestrating previous transcripts, therapy reports and user activity into 100-word summaries to eliminate repetitive intake questions, build empathy, and save ~5 minutes of session prep time.",
-      "Saved ~₹10 Lacs annually and cut course creation time from 3 days to under an hour by building a proprietary LMS through agentic coding workflows, with SSO token-based auth and multi-tenant routing for personalised course recommendations — replacing Learnyst, a third-party SaaS.",
-      "Increased activation by 37% and Week-4 retention by 24% for MindGym by implementing cohort-based routing across 12 user personas; deployed distinctly A/B-tested drip journeys for each segment and optimised core in-app game UX.",
+      "Increased average session CSAT score by 14% across 15,000+ monthly sessions by deploying a context-synthesising AI agent; orchestrated previous transcripts, therapy reports, and user activity into 100-word summaries to eliminate repetitive intake questions, build empathy, and save ~5 minutes of session prep time.",
+      "Saved ~INR 10 Lacs annually and cut course creation time from 3 days to <1 hour by building a proprietary LMS via agentic coding workflows with SSO token-based auth and multi-tenant routing for personalized course recommendations, replacing Learnyst (a third-party SaaS).",
+      "Increased activation by 37% and Week-4 retention by 24% for MindGym by implementing cohort-based routing across 12 user personas; deployed distinctly A/B-tested drip journeys for each segment and optimized core in-app game UX.",
     ],
   },
   {
@@ -73,12 +72,12 @@ export const experience: Experience[] = [
     company: "Badho",
     context: "B2B Marketplace · Seller App & Automation",
     period: "May 2025 — Feb 2026",
-    stack: ["Dashboard", "Analytics", "n8n", "Integrations"],
+    stack: ["Dashboard", "Analytics", "N8N", "Integrations"],
     highlights: [
-      "Increased DAU from 10K to 13K+ by driving the Badho Seller App revamp; redesigned the “My Home” dashboard to enhance navigation and feature discoverability, and establish scalable UI templates for future rollouts.",
-      "Reduced telecaller dependency and support tickets by 28% by conceptualising and launching the Supply Knowledge Center — an in-app, video-led help hub that elevated the seller support and onboarding experience.",
-      "Achieved a 4% jump in order fulfilment rates by creating the Seller Reports Dashboard — a live analytics module tracking SKU performance and sales trends to improve distributor forecasting and reduce stock-outs.",
-      "Scaled active vehicles to 2,000+ in 3 weeks and saved 20+ manual hours every week by owning the Badho × Wheelseye integration for in-app GPS delivery tracking, and building cross-platform, cross-database user activation automations via n8n workflows to completely eliminate human entry errors during onboarding.",
+      "Increased DAU from 10k to 13k+ by driving the Badho Seller App revamp; redesigned the \"My Home\" dashboard to enhance navigation, feature discoverability, and establish scalable UI templates for future rollouts.",
+      "Reduced telecaller dependency and support tickets by 28% by conceptualizing and launching the Supply Knowledge Center, an in-app, video-led help hub that elevated the seller support and onboarding experience.",
+      "Achieved a 4% jump in order fulfillment rates by creating the Seller Reports Dashboard, a live analytics module tracking SKU performance and sales trends to improve distributor forecasting and reduce stock-outs.",
+      "Scaled active vehicles to 2,000+ in 3 weeks and saved 20+ manual hours/week by owning the Badho × Wheelseye integration for in-app GPS delivery tracking, and building cross-platform, cross-database user activation automations via N8N workflows to completely eliminate human entry errors during onboarding.",
     ],
   },
   {
