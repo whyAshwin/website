@@ -1,0 +1,153 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[bottom=0.4in,top=0.3in, left=0.65in,right=0.65in]{geometry}
+
+% non-numbered pages
+\pagestyle{empty}
+
+%%%%%%%%%%% fonts %%%%%%%%%
+% Overleaf compiles with pdfLaTeX -> newtx (Times clone), exactly as before.
+% Local builds use tectonic (XeTeX), which cannot load newtx; TeX Gyre Termes
+% is the same font family newtx is built from, so metrics stay identical.
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage{newtxmath,newtxtext}
+\else
+  % tectonic runs XeTeX. TeX Gyre Termes is the family newtx is derived from,
+  % so metrics match the Overleaf build. Its ASCII " slot holds a curly glyph,
+  % so map " to a straight quote to keep the output byte-identical to pdfLaTeX.
+  \usepackage{fontspec}
+  \setmainfont{texgyretermes}[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+    % Keep ff/fi/ffi as separate glyphs so PDF text extraction and ATS parsers
+    % read "efficiency" rather than "e\uFB03ciency". Overleaf's T1 build already
+    % does this; only the XeTeX path needs the hint.
+    Ligatures      = NoCommon
+  ]
+  \usepackage{textcomp}
+  \catcode`\"=\active
+  \def"{\textquotedbl}
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%A Few Useful Packages
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6} % Akshat's original link color
+\hypersetup{colorlinks,breaklinks,urlcolor={linkcolour!90}, linkcolor={linkcolour!90}}
+
+% line spacing
+\linespread{1.1}
+
+% section reformatting
+\titleformat{\section}{\color{black} \large}{}{0em}{}[\color{black}]
+\titlespacing{\section}{0pt}{3pt}{3pt}
+
+\newcommand{\sectitle}[1]{
+    \vspace{1.5ex}
+    \section{#1}
+    \vspace{-3ex} % Adjusted slightly for aesthetics with the rule
+    \noindent\rule{\textwidth}{0.7pt}
+    \vspace{-4ex} % Adjusted slightly
+}
+
+% new text bold style (using Akshat's definition)
+\newsavebox\CBox
+\def\textBF#1{\sbox\CBox{#1}\resizebox{\wd\CBox}{\ht\CBox}{\textcolor{linkcolour}{{#1}}}}
+\parindent=0pt
+
+
+%-------------------- Begin document ----------------------
+\begin{document}
+\vspace{2ex}
+
+%-------------------- Title section ----------------------
+\begin{minipage}{\textwidth}
+    \vspace{7ex} % This might need adjustment based on name length
+    \par{
+    \centering
+    \vspace{-0.7in} % This might need adjustment
+        \textcolor{linkcolour}{\Large ASHWIN BARANWAL} % Ashwin's Name
+    \par}
+\end{minipage}
+ \vspace{-0.3in}
+%-------------------- Header ----------------------
+\begin{center}
+    \href{mailto:hey@ashwinbaranwal.com}{hey@ashwinbaranwal.com} \,$\cdot$\, \href{tel:+919569711556}{+91 9569711556} \\ % Ashwin's contact
+    \href{https://www.ashwinbaranwal.com}{www.ashwinbaranwal.com} \,$\cdot$\,
+    \href{https://www.linkedin.com/in/whyashwin}{linkedin.com/in/whyashwin} \,$\cdot$\,
+    \href{https://github.com/whyAshwin}{github.com/whyashwin} \\
+\end{center}
+
+%-------------------- SECTIONS ----------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\sectitle{Education}
+\textBF{Indian Institute Of Management (IIM), Sirmaur} -- {Master Of Business Administration (MBA)} \hfill May 2025 \\
+\vspace{1ex}
+\\
+\textBF{Banaras Hindu University (BHU), Varanasi} -- {Bachelor of Commerce (Finance)} \hfill Jul 2023 \\
+(AIR 382 out of 4 lac applicants)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\sectitle{Work Experience}
+\vspace{0.5ex}
+
+\textBF{YourDost (Mental Wellness Tech)} - {Product Manager} \hfill Mar 2026 - Present
+\begin{itemize}
+    \itemsep -3pt {}
+    \item Vibe-coded and launched an in-house Learning Management System (LMS), securely integrating it with the core platform through SSO-based authentication token exchange; eliminated reliance on a third-party solution, \textbf{saving 8L annually} and reducing course creation/editing turnaround time from 15 days to 6 hours \textbf{(60× faster)}.
+    \item Revamped MindGym by optimizing in-app game UX and building a persona-driven engagement strategy; analyzed user behavior and identified 12 personas, \textbf{ran multiple A/B tests} to hyper-personalise drip journeys for each segment, driving a \textbf{37\% increase} in \textbf{activation} and a \textbf{24\% improvement in Week-4 retention}.
+\end{itemize}
+\vspace{1ex}
+
+\textBF{Badho (B2B Marketplace)} - {Associate Product Manager, Seller App \& Automation} \hfill May 2025 - Feb 2026
+\begin{itemize}
+    \itemsep -3pt {}
+    \item Spearheaded the revamp of the Badho Seller App (10,000+ DAU), enhancing navigation, feature discoverability, and content structure through the redesigned "My Home" dashboard, \textbf{driving DAU from ~10,000 to 13000+}, while also established a template for new features to come in future for \textbf{maximising their discovery}.
+    \item Conceived and launched the Supply Knowledge Center, an in-app, video-led help hub for sellers; \textbf{reducing telecaller dependency and support tickets by 28\%} while also improving the experience of the users. 
+    \item Designed and launched Seller Reports Dashboard, a live analytics module used by sellers to track SKU performance, pricing deltas, and sales trends, improving data-driven decision-making for inventory forecasting and price setting at the distributor level, which \textbf{led to 4\% jump in order fulfillment rates} due fewer stock-outs.
+    \item     Owned and shipped the Badho × Wheelseye integration, enabling GPS tracking for delivery vehicles within the App; adoption scaled to \textbf{2,000+ active vehicles in 3 weeks}, improving operational visibility and retention.
+    \item Built multiple automations using N8N workflows and cron jobs involving cross-platform and cross-database syncs for "Wheelseye User Activation" \textbf{saving 20+ man-hours per week} and eradicating human errors.
+\end{itemize}
+\vspace{1ex}
+
+\textBF{Alt Mobility (EV Tech)} - {Product Intern, Onboarding \& Payments} \hfill Apr 2024 - Jun 2024
+\begin{itemize}
+    \itemsep -3pt {}
+    \item Built an EV vs Diesel Vehicle (ICE) running cost calculator. Launched \textbf{Daily Bachat}, a daily savings notification powered by IoT odometer data, which \textbf{increased DAU by 7\%} and \textbf{Avg. Session Time by 23s}. \textbf{Boosted engagement on low-interest alerts} (e.g., service reminders) through this high-frequency habit.
+    \item Vehicle PDI App - redefined core user flow and UX (fail-pass loop logic). \textbf{Shot up process efficiency by 3X}.
+\end{itemize}
+\vspace{1ex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\sectitle{Skills}
+\vspace{0.5ex}
+\begin{itemize}
+    \itemsep -3pt {}
+    \item \textbf{Product Management:} Product Roadmap Development, Metrics Definition \& Tracking, Data Analysis, A/B Testing, Wireframing \& Prototyping, User Research \& Persona Development, Agile Methodologies.
+    \item \textbf{Technical:} Cursor, Prompt Engineering, CS Fundamentals – Databases, Client-Server Architecture, SQL.
+    \item \textbf{Tools \& Hacks:} Vibecoding for rapid MVPs, Agentic AI
+\& Autonomous Workflows, JIRA, Figma, Miro.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\sectitle{Projects and Product Case Studies}
+\vspace{0.75ex}
+\begin{itemize}
+    \itemsep -2pt {} % Using tighter spacing like achievements
+    \item {\href{https://whyashwin.notion.site/Credit-Card-Discovery-Tool-1f4d75c28c8480ed8a44d6dc29be3e04?pvs=4}{\textbf{Credit Card Discovery Tool}}} | Product Development + Build + Monetization Model |  \href{https://whyashwin.notion.site/Credit-Card-Discovery-Tool-1f4d75c28c8480ed8a44d6dc29be3e04?pvs=4}{[Link]} \href{https://whyashwin.github.io/creditcarddiscovery/}{[Live Demo]}
+    \item {\href{https://whyashwin.notion.site/I-almost-listed-my-property-on-Airbnb-but-what-I-found-made-me-build-this-instead-1f3d75c28c8480159865e35cb25dd7d9?pvs=4}{\textbf{AirBnb Revamped}}} | Product Development + Build | \href{https://whyashwin.notion.site/I-almost-listed-my-property-on-Airbnb-but-what-I-found-made-me-build-this-instead-1f3d75c28c8480159865e35cb25dd7d9?pvs=4}{[Link]} \href{https://whyashwin.github.io/airbnb_v1/}{[Live Demo]}
+    \item {\href{https://medium.com/@whyashwin/product-development-ai-based-whatsapp-chatbot-for-an-e-commerce-business-9c2b51a455e4}{\textbf{WhatsApp Chatbot}}} | Product Development | \href{https://medium.com/@whyashwin/product-development-ai-based-whatsapp-chatbot-for-an-e-commerce-business-9c2b51a455e4}{[Link]}
+\end{itemize}
+
+
+\end{document}
