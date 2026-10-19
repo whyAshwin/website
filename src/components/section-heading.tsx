@@ -6,30 +6,60 @@ export function SectionHeading({
   title,
   description,
   align = "left",
+  size = "default",
   className,
 }: {
   kicker: string;
   title: string;
   description?: string;
   align?: "left" | "center";
+  /**
+   * "compact" is for sections that have to fit a whole screen, not just a
+   * column — it also yields the description on a viewport too short to hold
+   * everything, so the content below it keeps its room.
+   */
+  size?: "default" | "compact";
   className?: string;
 }) {
+  const compact = size === "compact";
+
   return (
     <Reveal
       className={cn(
-        "max-w-2xl",
+        compact ? "max-w-3xl" : "max-w-2xl",
         align === "center" && "mx-auto text-center",
         className,
       )}
     >
-      <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
+      <p
+        className={cn(
+          "font-mono uppercase text-accent",
+          compact ? "text-[10px] tracking-[0.24em]" : "text-xs tracking-[0.3em]",
+        )}
+      >
         {kicker}
       </p>
-      <h2 className="mt-3 text-[clamp(1.9rem,5vw,3rem)] font-semibold tracking-tight">
+      <h2
+        className={cn(
+          "font-semibold tracking-tight",
+          compact
+            ? "mt-2 text-[clamp(1.25rem,2.4vw,1.9rem)]"
+            : "mt-3 text-[clamp(1.9rem,5vw,3rem)]",
+        )}
+      >
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-balance text-muted">{description}</p>
+        <p
+          className={cn(
+            "text-pretty text-muted",
+            compact
+              ? "mt-2 text-xs sm:text-sm [@media(max-height:859.98px)]:hidden"
+              : "mt-4 text-balance",
+          )}
+        >
+          {description}
+        </p>
       )}
     </Reveal>
   );

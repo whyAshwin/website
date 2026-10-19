@@ -11,6 +11,19 @@ import { SceneFaceId } from "./scene-faceid";
 /**
  * Two decisions, set side by side. The pair is the point: one product adds a
  * decision to your day, the other removes one, and neither ships as a bug.
+ *
+ * The whole thing is built to land on one screen — the section claims a
+ * viewport and the cards take whatever height is left, so the comparison is
+ * never split across a scroll. The height has to be definite rather than a
+ * minimum: an auto-height flex column just grows to fit its contents, which is
+ * exactly the problem. Padding the top and bottom keeps the nav and the music
+ * player clear of the cards, and the min-height stops the cards collapsing to
+ * nothing on a viewport too short to hold them.
+ *
+ * Below `lg` the player's pill sits high, in its mobile safe-area position.
+ * Reserving for it would cost every short viewport ~70px of drawing, so the
+ * pill overlaps the corner of the left card instead — the cards are just
+ * surrounded by the player's glass, not obscured by it.
  */
 export function Playground() {
   const soundOn = useSoundEnabled();
@@ -29,19 +42,26 @@ export function Playground() {
   }, []);
 
   return (
-    <section id="playground" className="relative mx-auto max-w-6xl scroll-mt-24 px-6 py-24">
-      <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+    <section
+      id="playground"
+      className="relative mx-auto flex h-svh min-h-[37rem] max-w-6xl scroll-mt-20 flex-col justify-center px-4 pb-20 pt-20 sm:min-h-[36rem] sm:px-6"
+    >
+      <div className="flex shrink-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
         <SectionHeading
+          size="compact"
           kicker="Product playground"
           title="Two products. One question: what did it ask of you?"
-          description="Same company, same decade, both in millions of hands. One hands you a decision at the worst possible moment; the other never lets a decision form. Run them."
+          description="Same company, same decade, both in millions of hands. One adds a decision at the worst possible moment; the other never lets one form."
         />
 
         <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <p className="mr-1 hidden max-w-[13rem] text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-faint lg:block">
+            Drawn in the browser · sound synthesised live
+          </p>
           <button
             type="button"
             onClick={() => setSignal((n) => n + 1)}
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-bg transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-3.5 py-2 text-xs font-semibold text-bg transition-transform hover:scale-[1.02] active:scale-[0.98] sm:text-sm"
           >
             <Play className="size-3.5 fill-current" />
             Run both
@@ -52,7 +72,7 @@ export function Playground() {
             aria-pressed={soundOn}
             onClick={sfx.toggle}
             className={cn(
-              "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors",
+              "inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-medium transition-colors sm:text-sm",
               soundOn ? "border-line-strong text-fg" : "border-line text-faint",
             )}
           >
@@ -62,16 +82,10 @@ export function Playground() {
         </div>
       </div>
 
-      <div className="mt-12 grid gap-6 lg:grid-cols-2">
+      <div className="mt-4 flex min-h-0 flex-1 flex-row gap-3 sm:mt-6 sm:gap-4">
         <SceneMouse runSignal={signal} />
         <SceneFaceId runSignal={signal} />
       </div>
-
-      <p className="mt-10 max-w-3xl border-t border-line pt-6 text-sm leading-relaxed text-muted">
-        A good product decision removes a decision. A bad one adds one, and hands it over at the exact
-        moment you have the least room to make it. Both scenes are drawn in the browser — no footage,
-        no screenshots, and every sound synthesised on the spot.
-      </p>
     </section>
   );
 }

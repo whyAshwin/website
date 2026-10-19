@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, type CSSProperties } from "react";
 import { MotionConfig, motion, type Variants } from "motion/react";
 import { Lock, LockOpen } from "lucide-react";
 import { useBeats, type Beat } from "@/lib/use-beats";
+import { fitScale } from "@/lib/fit";
 import { ScenePanel } from "./scene-panel";
 
 /**
@@ -24,6 +25,15 @@ const TICK_COUNT = 44;
 const FACE = 100; // px — the face circle, and the width the scan line crosses
 const R_IN = 72;
 const R_OUT = 90;
+
+/**
+ * The scene's design footprint, a little larger than the phone itself so the
+ * handset never presses against the edges of the stage. Fitting the drawing to
+ * this box is what lets the stage be whatever height the viewport has left.
+ */
+const DESIGN = { w: 220, h: 420 };
+/** Scaled against the stage; a little headroom lets it fill a roomy screen. */
+const FIT = fitScale(DESIGN.w, DESIGN.h, 1.15);
 
 /** Radial ticks, first one at twelve o'clock, running clockwise. */
 const TICKS = Array.from({ length: TICK_COUNT }, (_, i) => {
@@ -174,28 +184,33 @@ export function SceneFaceId({ runSignal = 0 }: { runSignal?: number }) {
       onRun={run}
     >
       <MotionConfig reducedMotion="user">
+        {/* `container-type: size` is what the drawing measures itself against,
+            and it also means the scene can never push the stage taller. */}
         <div
           role="img"
           aria-label={label}
-          className="relative flex h-[360px] items-center justify-center overflow-hidden rounded-3xl border border-line sm:h-[430px]"
+          className="relative flex min-h-[96px] min-w-0 flex-1 items-center justify-center overflow-hidden rounded-3xl border border-line [container-type:size]"
           style={{
             background: "radial-gradient(120% 90% at 50% 100%, #141420 0%, #0b0b0f 62%)",
           }}
         >
-          <div
-            aria-hidden
-            className="absolute size-[220px] rounded-full bg-accent/25 blur-3xl"
-          />
-
           <motion.div
             key={runId}
             initial="idle"
             animate={phase}
             variants={PHONE}
-            className="relative"
-            style={{ perspective: 1200, transformStyle: "preserve-3d" }}
+            className="relative shrink-0 [scale:var(--fit)] [transition:scale_0.35s_cubic-bezier(0.16,1,0.3,1)]"
+            style={
+              { perspective: 1200, transformStyle: "preserve-3d", "--fit": FIT } as CSSProperties
+            }
           >
-            <div className="relative h-[386px] w-[190px] rounded-[34px] bg-[#1b1c22] p-[8px] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/10 [scale:0.78] sm:[scale:1]">
+            {/* The glow belongs to the phone, so it scales with it. */}
+            <div
+              aria-hidden
+              className="absolute left-1/2 top-1/2 aspect-square w-[126%] rounded-full bg-accent/25 blur-3xl [translate:-50%_-50%]"
+            />
+
+            <div className="relative h-[386px] w-[190px] rounded-[34px] bg-[#1b1c22] p-[8px] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/10">
               <div className="relative size-full overflow-hidden rounded-[27px] bg-black">
                 {/* Wallpaper, waiting behind everything. */}
                 <motion.div

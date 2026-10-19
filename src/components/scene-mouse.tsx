@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, type CSSProperties } from "react";
 import { MotionConfig, motion, type Variants } from "motion/react";
 import { X } from "lucide-react";
 import { useBeats, type Beat } from "@/lib/use-beats";
+import { fitScale } from "@/lib/fit";
 import { ScenePanel } from "./scene-panel";
 
 /**
@@ -21,6 +22,17 @@ const ORDER: Phase[] = ["idle", "lift", "flip", "cable", "plug", "charge", "dead
 const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
 /** Slight overshoot, so the mouse lands like it has weight. */
 const EASE_FLIP: [number, number, number, number] = [0.22, 1.16, 0.34, 1];
+
+/**
+ * The scene's design footprint, in the scene's own pixels. The mouse is 320
+ * wide, but its cable swings a further 280 to the right, so the box that has
+ * to land on screen is wider than the mouse. Fitting against that box is what
+ * keeps a length of cable visible on a narrow screen; the rest running off the
+ * edge is deliberate.
+ */
+const DESIGN = { w: 410, h: 200 };
+/** Scaled against the stage; a little headroom lets it fill a roomy screen. */
+const FIT = fitScale(DESIGN.w, DESIGN.h, 1.35);
 
 /**
  * Deliberately over-long. Roughly a second of it is the mouse rotating over,
@@ -128,10 +140,12 @@ export function SceneMouse({ runSignal = 0 }: { runSignal?: number }) {
       onRun={run}
     >
       <MotionConfig reducedMotion="user">
+        {/* `container-type: size` is what the drawing measures itself against,
+            and it also means the scene can never push the stage taller. */}
         <div
           role="img"
           aria-label={label}
-          className="relative flex h-[360px] items-center justify-center overflow-hidden rounded-3xl border border-line sm:h-[430px]"
+          className="relative flex min-h-[96px] min-w-0 flex-1 items-center justify-center overflow-hidden rounded-3xl border border-line [container-type:size]"
           style={{
             background: "radial-gradient(120% 90% at 50% 0%, #17171f 0%, #0b0b0f 62%)",
           }}
@@ -140,12 +154,11 @@ export function SceneMouse({ runSignal = 0 }: { runSignal?: number }) {
             aria-hidden
             animate={idle ? { y: [0, -4, 0] } : { y: 0 }}
             transition={idle ? { duration: 5.4, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
-            className="relative aspect-[320/168] w-[320px] max-w-[64%]"
-            style={{ perspective: 1100 }}
+            className="relative h-[168px] w-[320px] shrink-0 [scale:var(--fit)] [transition:scale_0.35s_cubic-bezier(0.16,1,0.3,1)]"
+            style={{ perspective: 1100, "--fit": FIT } as CSSProperties}
           >
             {/* Contact shadow — measured against the mouse, not the stage, so it
-                keeps its place however tall the stage gets. The 64% cap above is
-                what reserves the right-hand two-fifths the cable swings through. */}
+                keeps its place however tall the stage gets. */}
             <motion.div
               aria-hidden
               animate={{ opacity: idle ? 0.5 : 0.65, scaleX: idle ? 1 : 1.06 }}
@@ -294,13 +307,13 @@ export function SceneMouse({ runSignal = 0 }: { runSignal?: number }) {
             }}
           />
 
-          <div className="pointer-events-none absolute bottom-6 left-1/2 [translate:-50%_0]">
+          <div className="pointer-events-none absolute bottom-3 left-1/2 [translate:-50%_0]">
             <motion.span
               aria-hidden
               initial={{ opacity: 0, scale: 1.35, rotate: -15 }}
               animate={dead ? { opacity: 1, scale: 1, rotate: -6 } : { opacity: 0, scale: 1.35, rotate: -15 }}
               transition={{ duration: 0.32, delay: dead ? 0.34 : 0, ease: EASE_OUT }}
-              className="inline-flex items-center gap-2 rounded-lg border-2 border-red-500/60 bg-bg/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-red-300 backdrop-blur-sm"
+              className="inline-flex items-center gap-2 rounded-lg border-2 border-red-500/60 bg-bg/70 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-red-300 backdrop-blur-sm sm:text-[10px]"
             >
               <X className="size-3.5" />
               Unusable while charging
