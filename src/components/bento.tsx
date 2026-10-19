@@ -96,7 +96,11 @@ export function Bento() {
         {/* Feature card with photo */}
         <motion.div variants={revealItem} className="md:col-span-4 md:row-span-2">
           <SpotlightCard className="h-full rounded-3xl border border-line bg-surface">
-            <div className="relative min-h-[320px] overflow-hidden rounded-3xl">
+            {/* `h-full` is load-bearing: the card stretches to whatever the
+                grid row turns out to be (the Toolkit beside it decides that),
+                and a fixed min-height alone left the photo 320px tall with a
+                band of empty surface underneath it. */}
+            <div className="relative h-full min-h-[320px] overflow-hidden rounded-3xl">
               <Image
                 src="/gallery/field.jpg"
                 alt="Ashwin in the field"
