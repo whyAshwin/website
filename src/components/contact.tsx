@@ -39,7 +39,7 @@ export function Contact() {
         <Reveal className="relative mx-auto max-w-2xl text-center">
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">Contact</p>
           <h2 className="mt-4 text-[clamp(2.2rem,6vw,3.8rem)] font-semibold leading-[1.02] tracking-tight">
-            Let&apos;s build something <span className="text-gradient">worth using</span>.
+            Let&apos;s build something <span className="text-gradient">people come back to</span>.
           </h2>
           <p className="mx-auto mt-5 max-w-lg text-balance text-muted">
             Open to product roles, interesting intros, or just geeking out on builds. I&apos;d love to
@@ -93,7 +93,13 @@ export function Contact() {
       <footer className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-line pt-8 text-xs text-faint sm:flex-row">
         <p className="font-mono">© {year} {profile.name}</p>
         <p className="font-mono">
-          Built with Next.js, Tailwind &amp; Framer Motion
+          Built with{" "}
+          {/* The credit is the joke: the stack is struck out, and the thing
+              that actually did the work gets the only loud colour on the page.
+              `<s>` because the claim is no longer accurate — not `<del>`,
+              which would mean it was edited out of a document. */}
+          <s className="line-through opacity-60">Next.js, Tailwind &amp; Framer Motion</s>{" "}
+          <span className="text-poppy">🤖 AI</span>
         </p>
       </footer>
     </section>

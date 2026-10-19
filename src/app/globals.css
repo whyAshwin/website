@@ -23,6 +23,11 @@
   --color-accent-deep: #4b3fd6;
   --color-accent-2: #4cc9f0;
 
+  /* Poppy — the loud one, kept for the footer's AI credit. Red is already
+     spoken for on this site (the bad-experience panel, the "rejected"
+     heading), so the joke gets its own pink rather than borrowing alarm. */
+  --color-poppy: #ff5fa2;
+
   /* Type */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;

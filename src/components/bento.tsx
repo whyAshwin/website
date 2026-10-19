@@ -143,7 +143,7 @@ export function Bento() {
           <a href="#contact" className="group block h-full">
             <SpotlightCard className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-accent/30 bg-accent/10 p-5">
               <p className="text-lg font-semibold leading-snug">
-                Got a problem worth solving?
+                Bring me the messy part.
               </p>
               <span className="inline-flex items-center gap-2 font-mono text-sm text-accent">
                 Let&apos;s talk
