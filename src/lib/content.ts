@@ -4,11 +4,12 @@ export const profile = {
   role: "Product Manager",
   /**
    * The hero line, in two halves: muted opening, then the emphasised turn.
-   * The second half answers why he's the one building — a fact about the
-   * person, not a capability claim.
+   * The second half states the method, not a capability — it is the belief the
+   * rest of the page is meant to be evidence for.
    */
   tagline: "I build software that asks less of you.",
-  taglineEmphasis: "I write it myself, because I'm not good at waiting.",
+  taglineEmphasis:
+    "I believe the best way to solve a problem is to put a working product in someone's hands, fast.",
   /**
    * The short profile under the About heading. What he notices, not what he
    * has done — the cards on this page are the evidence.
