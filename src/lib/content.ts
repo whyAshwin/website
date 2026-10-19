@@ -58,7 +58,7 @@ export type Experience = {
 export const experience: Experience[] = [
   {
     role: "Product Manager",
-    company: "YourDost",
+    company: "YourDOST",
     period: "Mar 2026 — Present",
     stack: ["Agentic AI", "LMS", "SSO", "Multi-tenant", "A/B Testing"],
     highlights: [
@@ -77,7 +77,7 @@ export const experience: Experience[] = [
       "Increased DAU from 10k to 13k+ by driving the Badho Seller App revamp; redesigned the \"My Home\" dashboard to enhance navigation, feature discoverability, and establish scalable UI templates for future rollouts.",
       "Reduced telecaller dependency and support tickets by 28% by conceptualizing and launching the Supply Knowledge Center, an in-app, video-led help hub that elevated the seller support and onboarding experience.",
       "Achieved a 4% jump in order fulfillment rates by creating the Seller Reports Dashboard, a live analytics module tracking SKU performance and sales trends to improve distributor forecasting and reduce stock-outs.",
-      "Scaled active vehicles to 2,000+ in 3 weeks and saved 20+ manual hours/week by owning the Badho × Wheelseye integration for in-app GPS delivery tracking, and building cross-platform, cross-database user activation automations via N8N workflows to completely eliminate human entry errors during onboarding.",
+      "Scaled active vehicles to 2,000+ in 3 weeks and saved 20+ manual hours/week by owning the Badho × WheelsEye integration for in-app GPS delivery tracking, and building cross-platform, cross-database user activation automations via N8N workflows to completely eliminate human entry errors during onboarding.",
     ],
   },
   {
