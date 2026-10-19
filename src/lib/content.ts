@@ -63,9 +63,9 @@ export const experience: Experience[] = [
     period: "Mar 2026 — Present",
     stack: ["Agentic AI", "LMS", "SSO", "Multi-tenant", "A/B Testing"],
     highlights: [
-      "Shipped a context-synthesising AI agent that reads prior transcripts, therapy reports and platform activity into a 100-word session summary — lifting average session CSAT by 14% across 15,000+ sessions a month, saving ~5 minutes of prep per session and ending the repetitive intake questions.",
-      "Vibe-coded a proprietary LMS through agentic coding workflows — SSO token-based auth, multi-tenant routing, personalised course recommendations — replacing Learnyst, a third-party SaaS, to save ₹10L a year and cut course creation from 3 days to under an hour.",
-      "Revamped MindGym by routing users into 12 persona cohorts, each with its own A/B-tested drip journey, alongside core in-app game UX work — a 37% activation lift and 24% better Week-4 retention.",
+      "Increased average session CSAT score by 14% across 15,000+ monthly sessions by deploying a context-synthesising AI agent — orchestrating previous transcripts, therapy reports and user activity into 100-word summaries to eliminate repetitive intake questions, build empathy, and save ~5 minutes of session prep time.",
+      "Saved ~₹10 Lacs annually and cut course creation time from 3 days to under an hour by building a proprietary LMS through agentic coding workflows, with SSO token-based auth and multi-tenant routing for personalised course recommendations — replacing Learnyst, a third-party SaaS.",
+      "Increased activation by 37% and Week-4 retention by 24% for MindGym by implementing cohort-based routing across 12 user personas; deployed distinctly A/B-tested drip journeys for each segment and optimised core in-app game UX.",
     ],
   },
   {
@@ -75,11 +75,10 @@ export const experience: Experience[] = [
     period: "May 2025 — Feb 2026",
     stack: ["Dashboard", "Analytics", "n8n", "Integrations"],
     highlights: [
-      "Spearheaded the Badho Seller App revamp (10K+ DAU) — rebuilt navigation and the “My Home” dashboard, left behind scalable UI templates for future rollouts, and grew DAU from 10,000 to 13,000+.",
-      "Conceived the Supply Knowledge Center, an in-app video-led help hub, cutting telecaller dependency and support tickets by 28%.",
-      "Owned the Badho × Wheelseye integration, bringing GPS tracking into the app — 2,000+ active vehicles in 3 weeks.",
-      "Designed Seller Reports, a live analytics module (SKU performance, price deltas, sales trends) that lifted order-fulfilment rates by 4%.",
-      "Built automations with n8n workflows and cron jobs across platforms and databases; “Wheelseye User Activation” alone saves 20+ man-hours/week.",
+      "Increased DAU from 10K to 13K+ by driving the Badho Seller App revamp; redesigned the “My Home” dashboard to enhance navigation and feature discoverability, and establish scalable UI templates for future rollouts.",
+      "Reduced telecaller dependency and support tickets by 28% by conceptualising and launching the Supply Knowledge Center — an in-app, video-led help hub that elevated the seller support and onboarding experience.",
+      "Achieved a 4% jump in order fulfilment rates by creating the Seller Reports Dashboard — a live analytics module tracking SKU performance and sales trends to improve distributor forecasting and reduce stock-outs.",
+      "Scaled active vehicles to 2,000+ in 3 weeks and saved 20+ manual hours every week by owning the Badho × Wheelseye integration for in-app GPS delivery tracking, and building cross-platform, cross-database user activation automations via n8n workflows to completely eliminate human entry errors during onboarding.",
     ],
   },
   {
