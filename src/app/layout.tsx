@@ -56,7 +56,16 @@ export const metadata: Metadata = {
       "I build software that asks less of you. I believe the best way to solve a problem is to put a working product in someone's hands, fast.",
     images: ["/profile.jpg"],
   },
-  icons: { icon: "/favicon.ico" },
+  // The mark is the "A" itself: two arms meeting at a soft apex, crossbar as a
+  // shelf, in the site's white-to-violet-to-cyan ink. Dark glass tile so the
+  // same file holds up on light and dark tab bars and on a home screen.
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 export const viewport: Viewport = {

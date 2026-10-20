@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Ashwin Baranwal">
+  <title>Ashwin Baranwal</title>
+  <defs>
+    <linearGradient id="tile" x1="0.18" y1="0" x2="0.82" y2="1">
+      <stop offset="0" stop-color="#191925" />
+      <stop offset="1" stop-color="#07070b" />
+    </linearGradient>
+    <radialGradient id="sheen" cx="0.3" cy="0.1" r="0.9">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.12" />
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="150" y1="108" x2="380" y2="404">
+      <stop offset="0" stop-color="#f6f3ff" />
+      <stop offset="0.42" stop-color="#c3b8ff" />
+      <stop offset="0.74" stop-color="#7c6cff" />
+      <stop offset="1" stop-color="#4cc9f0" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#tile)" />
+  <rect width="512" height="512" rx="112" fill="url(#sheen)" />
+  <rect x="3" y="3" width="506" height="506" rx="109" fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="6" />
+  <g fill="none" stroke="url(#ink)" stroke-width="60" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 132 404 L 256 104 L 380 404" />
+    <path d="M 194 272 L 318 272" />
+  </g>
+</svg>
