@@ -76,15 +76,26 @@ const DRAW: Variants = {
   dead: { pathLength: 1 },
 };
 
+/**
+ * The connector drops into the port from in front of the underside face. It
+ * does not slide in from the side — there is no side wall to plug into.
+ */
 const PLUG: Variants = {
-  idle: { x: 26, opacity: 0 },
-  lift: { x: 26, opacity: 0 },
-  flip: { x: 26, opacity: 0 },
-  cable: { x: 26, opacity: 1, transition: { duration: 0.15 } },
-  plug: { x: 0, opacity: 1, transition: { duration: 0.2, ease: EASE_OUT } },
-  charge: { x: 0, opacity: 1 },
-  dead: { x: 0, opacity: 1 },
+  idle: { y: -16, opacity: 0 },
+  lift: { y: -16, opacity: 0 },
+  flip: { y: -16, opacity: 0 },
+  cable: { y: -16, opacity: 1, transition: { duration: 0.15 } },
+  plug: { y: 0, opacity: 1, transition: { duration: 0.22, ease: EASE_OUT } },
+  charge: { y: 0, opacity: 1 },
+  dead: { y: 0, opacity: 1 },
 };
+
+/**
+ * One path for the lead: it rises straight out of the connector, then bends
+ * away over the mouse. Drawn once and reused so the shadow and the cable can
+ * never drift apart.
+ */
+const CABLE = "M 286 56 C 286 26 300 10 346 4 C 430 -6 526 4 606 14";
 
 const LED: Variants = {
   idle: { opacity: 0 },
@@ -220,6 +231,14 @@ export function SceneMouse() {
                       <stop offset="55%" stopColor="#edeff3" />
                       <stop offset="100%" stopColor="#c3c6ce" />
                     </linearGradient>
+                    <linearGradient id="mm-plug" x1="0.2" y1="0" x2="0.85" y2="1">
+                      <stop offset="0%" stopColor="#ffffff" />
+                      <stop offset="58%" stopColor="#f2f4f7" />
+                      <stop offset="100%" stopColor="#d3d7de" />
+                    </linearGradient>
+                    <filter id="mm-blur" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="4" />
+                    </filter>
                   </defs>
 
                   <rect x="1" y="1" width="318" height="166" rx="80" fill="url(#mm-belly)" />
@@ -251,37 +270,77 @@ export function SceneMouse() {
                   </g>
 
                   {/* Charge indicator */}
-                  <circle cx="248" cy="84" r="6" fill="#191a1f" />
-                  <motion.circle variants={HALO} cx="248" cy="84" r="11" fill="#3ddc84" />
-                  <motion.circle variants={LED} cx="248" cy="84" r="4.6" fill="#3ddc84" />
+                  <circle cx="248" cy="84" r="5.4" fill="#191a1f" />
+                  <motion.circle variants={HALO} cx="248" cy="84" r="10" fill="#3ddc84" />
+                  <motion.circle variants={LED} cx="248" cy="84" r="3.8" fill="#3ddc84" />
 
-                  {/* The port. Recessed, centred, and facing the desk. */}
-                  <rect x="272" y="69" width="42" height="30" rx="15" fill="#24252b" />
-                  <rect x="290" y="77" width="22" height="14" rx="4.5" fill="#0b0b0e" />
+                  {/* The port is a slot in this face, a few millimetres in from
+                      the nose — not in the side wall. The connector goes into
+                      it perpendicular to the underside, which is precisely why
+                      the mouse has to lie on its back to charge. */}
+                  <rect x="278" y="66" width="16" height="36" rx="8" fill="#1b1c22" />
+                  <rect x="281" y="68" width="10" height="32" rx="5" fill="#07070a" />
+                  <rect x="281" y="68" width="10" height="5" rx="2.5" fill="#3c3e46" opacity="0.85" />
 
-                  {/* Cable and plug, drawn inside the same 3D space so they stay
-                      attached to the mouse — and slide in as one piece. */}
+                  {/* Lead and connector travel together: the plug hovers just
+                      off the face while the cable draws itself in, then settles
+                      into the slot. Sharing the group keeps the cable attached
+                      to the shell the whole way down. */}
                   <motion.g variants={PLUG}>
                     <motion.path
-                      d="M 600 22 C 480 34 374 66 322 84"
+                      d={CABLE}
+                      fill="none"
+                      stroke="#000000"
+                      strokeWidth="11"
+                      strokeLinecap="round"
+                      opacity="0.4"
+                      filter="url(#mm-blur)"
+                      transform="translate(5 10)"
+                      variants={DRAW}
+                    />
+                    <motion.path
+                      d={CABLE}
                       fill="none"
                       stroke="url(#mm-cable)"
-                      strokeWidth="11"
+                      strokeWidth="9"
                       strokeLinecap="round"
                       variants={DRAW}
                     />
                     <motion.path
-                      d="M 600 22 C 480 34 374 66 322 84"
+                      d={CABLE}
                       fill="none"
                       stroke="#ffffff"
-                      strokeWidth="3.5"
+                      strokeWidth="3"
                       strokeLinecap="round"
                       opacity="0.55"
                       variants={DRAW}
                     />
-                    <rect x="297" y="74" width="26" height="20" rx="6" fill="#f4f5f7" />
-                    <rect x="300" y="78" width="22" height="12" rx="4" fill="#e0e2e7" />
-                    <rect x="288" y="79.5" width="11" height="9" rx="2.5" fill="#b7bbc4" />
+
+                    {/* The connector, seen down its axis: the shell stands up
+                        out of the slot, wider at the cable end, lit from the
+                        top-left, with the cable entering behind a collar. */}
+                    <ellipse
+                      cx="274"
+                      cy="94"
+                      rx="23"
+                      ry="19"
+                      fill="#000000"
+                      opacity="0.42"
+                      filter="url(#mm-blur)"
+                    />
+                    <path
+                      d="M 267 74 Q 267 60 281 60 L 291 60 Q 305 60 305 74 L 301 98 Q 299 106 291 106 L 281 106 Q 273 106 271 98 Z"
+                      fill="url(#mm-plug)"
+                    />
+                    <path
+                      d="M 270 77 Q 270 64 282 64 L 290 64"
+                      fill="none"
+                      stroke="#ffffff"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      opacity="0.9"
+                    />
+                    <rect x="279" y="52" width="14" height="12" rx="6" fill="#e4e7ec" />
                   </motion.g>
                 </svg>
               </div>
