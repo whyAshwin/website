@@ -240,14 +240,28 @@ export function Bento() {
           </SpotlightCard>
         </motion.div>
 
-        {/* CTA card */}
+        {/* CTA card. A potter's hands on a half-formed pot are the whole
+            argument of the sentence above them, so the photo is the card
+            rather than a picture on it. The scrim is heaviest at the top and
+            bottom because that is where the two lines of type land; the middle
+            stays open so the hands and the wet clay read cleanly. The old
+            `bg-accent/10` wash is gone — over a photograph it only muddied the
+            warm clay, and the accent border already carries the CTA. */}
         <motion.div variants={revealItem} className="md:col-span-2">
           <a href="#contact" className="group block h-full">
-            <SpotlightCard className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-accent/30 bg-accent/10 p-5">
-              <p className="text-lg font-semibold leading-snug">
+            <SpotlightCard className="relative flex h-full flex-col justify-between gap-6 rounded-3xl border border-accent/30 p-5">
+              <Image
+                src="/gallery/pottery.jpg"
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 400px"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-bg/85 via-bg/30 to-bg/80" />
+              <p className="relative text-lg font-semibold leading-snug">
                 Bring me the messy part.
               </p>
-              <span className="inline-flex items-center gap-2 font-mono text-sm text-accent">
+              <span className="relative inline-flex items-center gap-2 font-mono text-sm text-accent">
                 Let&apos;s talk
                 <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </span>
