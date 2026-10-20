@@ -236,6 +236,14 @@ export function Bento() {
                 <Rocket className="mt-0.5 size-3.5 shrink-0 text-accent" />
                 Automate the boring parts.
               </li>
+              <li className="flex gap-2">
+                <Rocket className="mt-0.5 size-3.5 shrink-0 text-accent" />
+                Ask less of people.
+              </li>
+              <li className="flex gap-2">
+                <Rocket className="mt-0.5 size-3.5 shrink-0 text-accent" />
+                Sweat the last five percent.
+              </li>
             </ul>
           </SpotlightCard>
         </motion.div>
